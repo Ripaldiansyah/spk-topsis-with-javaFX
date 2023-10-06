@@ -18,12 +18,12 @@
       </AnchorPane>
       <AnchorPane layoutX="500.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: white;">
          <children>
-            <MFXTextField id="txtUsername" floatMode="BORDER" floatingText="Username" layoutX="76.0" layoutY="174.0" prefHeight="51.0" prefWidth="361.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="20">
+            <MFXTextField fx:id="txtUsername" floatMode="BORDER" floatingText="Username" layoutX="76.0" layoutY="174.0" prefHeight="51.0" prefWidth="361.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="20">
                <font>
                   <Font name="Roboto" size="13.0" />
                </font>
             </MFXTextField>
-            <MFXPasswordField id="txtPassword" floatMode="BORDER" floatingText="Password" layoutX="76.0" layoutY="241.0" prefHeight="51.0" prefWidth="361.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="14" />
+            <MFXPasswordField fx:id="txtPassword" floatMode="BORDER" floatingText="Password" layoutX="76.0" layoutY="241.0" prefHeight="51.0" prefWidth="361.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="14" />
             <MFXButton id="btnLogin" buttonType="RAISED" depthLevel="LEVEL3" layoutX="157.0" layoutY="335.0" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: black;" text="MASUK" textFill="WHITE">
                <font>
                   <Font name="Roboto Bold" size="14.0" />
