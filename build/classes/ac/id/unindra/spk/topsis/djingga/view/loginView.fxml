@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: black;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="150.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="500.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: white;">
+         <children>
+            <MFXTextField id="txtUsername" floatMode="BORDER" floatingText="Username" layoutX="76.0" layoutY="174.0" prefHeight="51.0" prefWidth="361.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="20">
+               <font>
+                  <Font name="Roboto" size="13.0" />
+               </font>
+            </MFXTextField>
+            <MFXPasswordField id="txtPassword" floatMode="BORDER" floatingText="Password" layoutX="76.0" layoutY="241.0" prefHeight="51.0" prefWidth="361.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="14" />
+            <MFXButton id="btnLogin" buttonType="RAISED" depthLevel="LEVEL3" layoutX="157.0" layoutY="335.0" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: black;" text="MASUK" textFill="WHITE">
+               <font>
+                  <Font name="Roboto Bold" size="14.0" />
+               </font>
+            </MFXButton>
+            <MFXButton id="btnRegister" buttonType="RAISED" layoutX="157.0" layoutY="450.0" prefHeight="51.0" prefWidth="200.0" rippleColor="#b2b2b2" style="-fx-background-color: white;" text="DAFTAR" textFill="#6f6f6f">
+               <font>
+                  <Font name="Roboto Bold" size="14.0" />
+               </font>
+            </MFXButton>
+            <Label layoutX="190.0" layoutY="70.0" text="LOGIN PAGE">
+               <font>
+                  <Font name="Roboto Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="76.0" layoutY="300.0" text="Lupa Password ?" />
+            <Label layoutX="247.0" layoutY="410.0" text="atau" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Volumes/HDD/Development/java/fontawesome/fontawesomefx-commons-9.1.2.jar",
+        "/Volumes/HDD/Development/java/fontawesome/fontawesomefx-materialicons-2.2.0-9.1.2.jar"
+    ]
+}
