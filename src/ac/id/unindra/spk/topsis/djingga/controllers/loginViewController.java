@@ -12,11 +12,11 @@ import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 
 public class loginViewController implements Initializable,loginService{
@@ -26,6 +26,9 @@ public class loginViewController implements Initializable,loginService{
     @FXML private MFXPasswordField txtPassword;
     @FXML private AnchorPane loginPane;
     @FXML private AnchorPane registerPane;
+    @FXML private AnchorPane successPane;
+    @FXML private Label accountNotConfirmMessage;
+    @FXML private ImageView accountNotConfirmImage;
     
      private Connection conn = new DatabaseConnection().getConnection();
      private NotificationManager notificationManager = new NotificationManager();
@@ -58,6 +61,7 @@ public class loginViewController implements Initializable,loginService{
                 id = rs.getString("idPengguna");
                 fullName = rs.getString("namaLengkap");
                 role = rs.getString("level");
+                notificationManager.notification("Berhasil Masuk", "Selamat Datang "+fullName);
             }else{
                 notificationManager.notification("Tidak Dapat Masuk", "Periksa Nama Pengguna dan Kata Sandi Anda");
             }
@@ -102,11 +106,41 @@ public class loginViewController implements Initializable,loginService{
     }
     
     @FXML
-    private void register(MouseEvent event) throws IOException{
+    private void registerPane(MouseEvent event) throws IOException{
          registerPane.setVisible(true);
          registerPane.setDisable(false);
 
          loginPane.setVisible(false);
          loginPane.setDisable(true);
+         
+         successPane.setVisible(false);
+         successPane.setDisable(true);
+         
+    }
+    
+    @FXML
+    private void loginPane(MouseEvent event) throws IOException{
+         registerPane.setVisible(false);
+         registerPane.setDisable(true);
+
+         loginPane.setVisible(true);
+         loginPane.setDisable(false);
+         
+         successPane.setVisible(false);
+         successPane.setDisable(true);
+    }
+    
+    @FXML
+    private void successPane(MouseEvent event) throws IOException{
+         registerPane.setVisible(false);
+         registerPane.setDisable(true);
+
+         loginPane.setVisible(false);
+         loginPane.setDisable(true);
+         
+         successPane.setVisible(true);
+         successPane.setDisable(false);
+         accountNotConfirmMessage.setVisible(false);
+         accountNotConfirmImage.setVisible(false);
     }
 }
