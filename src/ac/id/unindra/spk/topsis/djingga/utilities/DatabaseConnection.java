@@ -7,13 +7,12 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private static Connection connection = null;
 
-    // Informasi koneksi ke database SQL
+
     private static final String jdbcUrl = "jdbc:mysql://localhost:3306/spk-djingga";
     private static final String username = "root";
     private static final String password = "";
 
-    // Metode untuk membuat koneksi ke database
-    public static Connection getConnection() {
+    public Connection getConnection() {
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection(jdbcUrl, username, password);
@@ -24,8 +23,7 @@ public class DatabaseConnection {
         return connection;
     }
 
-    // Metode untuk menutup koneksi
-    public static void closeConnection() {
+    public  void closeConnection() {
         if (connection != null) {
             try {
                 connection.close();

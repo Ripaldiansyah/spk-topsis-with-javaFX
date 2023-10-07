@@ -11,5 +11,5 @@ import ac.id.unindra.spk.topsis.djingga.models.loginModel;
  * @author ripal
  */
 public interface loginService {
-    void processLogin(loginModel login);
+    void processLogin(loginModel loginModel);
 }
