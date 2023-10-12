@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CurrentDate",
+            "request": "launch",
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.utilities.CurrentDate",
+            "projectName": "SPK TOPSIS Djingga_79db5bd0"
+        },
+        {
+            "type": "java",
+            "name": "EmailSender",
+            "request": "launch",
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.utilities.EmailSender",
+            "projectName": "SPK TOPSIS Djingga_79db5bd0"
+        },
+        {
+            "type": "java",
+            "name": "OTPGenerator",
+            "request": "launch",
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.utilities.OTPGenerator",
+            "projectName": "SPK TOPSIS Djingga_79db5bd0"
+        },
+        {
+            "type": "java",
             "name": "DatabaseConnection",
             "request": "launch",
             "mainClass": "ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection",
