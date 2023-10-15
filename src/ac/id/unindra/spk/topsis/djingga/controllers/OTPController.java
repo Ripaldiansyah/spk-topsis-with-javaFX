@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import ac.id.unindra.spk.topsis.djingga.models.OTPModel;
 import ac.id.unindra.spk.topsis.djingga.models.loginModel;
@@ -17,6 +20,7 @@ import ac.id.unindra.spk.topsis.djingga.utilities.OTPGenerator;
 public class OTPController implements OTPService {
     private Connection conn = new DatabaseConnection().getConnection();
     OTPService OTPService = this;
+    OTPModel OTPModel = new OTPModel();
 
     @Override
     public void checkOTP(OTPModel OTPModel, registerModel registerModel) {
@@ -33,26 +37,31 @@ public class OTPController implements OTPService {
                 registerModel.setFullName(rs.getString("namaLengkap"));
                 OTPModel.setStoredOTP(rs.getString("OTPVerifikasi1"));
 
-                if (OTPModel.getStoredOTP().equalsIgnoreCase(OTPModel.getEnteredOTP())) {
-                    String sqlUpdate = "UPDATE pengguna SET statusAkun = 'Active' WHERE idPengguna=?";
-                    stat.close();
-                    try {
-                        stat = conn.prepareStatement(sqlUpdate);
-                        stat.setString(1, registerModel.getIdUser());
-                        stat.executeUpdate();
-                    } catch (Exception e) {
-                        System.err.println(e);
-                    } finally {
-                        if (stat != null) {
-                            try {
-                                stat.close();
-                            } catch (Exception e) {
-                                System.err.println(e);
+                if (OTPModel.getStoredOTP() != null) {
+                    if (OTPModel.getStoredOTP().equalsIgnoreCase(OTPModel.getEnteredOTP())) {
+                        String sqlUpdate = "UPDATE pengguna SET statusAkun = 'Active' WHERE idPengguna=?";
+                        stat.close();
+                        try {
+                            stat = conn.prepareStatement(sqlUpdate);
+                            stat.setString(1, registerModel.getIdUser());
+                            stat.executeUpdate();
+                            loginViewController.runPane=true;
+                        } catch (Exception e) {
+                            System.err.println(e);
+                        } finally {
+                            if (stat != null) {
+                                try {
+                                    stat.close();
+                                } catch (Exception e) {
+                                    System.err.println(e);
+                                }
                             }
                         }
+                    } else {
+                        NotificationManager.notification("Peringatan", "Kode OTP yang dimasukan tidak sesuai");
                     }
                 } else {
-                    NotificationManager.notification("Peringatan", "Kode OTP yang dimasukan tidak sesuai");
+                    NotificationManager.notification("Peringatan", "Silahkan minta OTP kembali.");
                 }
 
             }
@@ -83,12 +92,13 @@ public class OTPController implements OTPService {
                 stat = conn.prepareStatement(sqlUpdate);
                 stat.setString(1, OTPModel.getStoredOTP());
                 stat.setString(2, OTPModel.getIdOTP());
+
             } else {
                 stat = conn.prepareStatement(sqlInsert);
                 stat.setString(1, OTPModel.getIdOTP());
                 stat.setString(2, OTPModel.getStoredOTP());
             }
-
+            OTPService.destroyOTP(OTPModel);
             stat.executeUpdate();
         } catch (Exception e) {
             System.err.println(e);
@@ -105,8 +115,6 @@ public class OTPController implements OTPService {
 
     @Override
     public void resendOTP(loginModel loginModel) {
-        OTPModel OTPModel = new OTPModel();
-
         String storedOTP = OTPGenerator.generateOTP(6);
         String idOTP = loginModel.getIdOTP();
         EmailSender.sendOTP(loginModel.getEmail(), storedOTP);
@@ -119,7 +127,7 @@ public class OTPController implements OTPService {
 
     @Override
     public void sendOTP(registerModel registerModel, OTPModel OTPModel) {
-        String sql = "SELECT pengguna.email, OTP.OTPVerifikasi1 FROM pengguna INNER JOIN OTP ON pengguna.idOTP = OTP.idOTP WHERE pengguna.idPengguna = ?";
+        String sql = "SELECT pengguna.email, OTP.idOTP , OTP.OTPVerifikasi1 FROM pengguna INNER JOIN OTP ON pengguna.idOTP = OTP.idOTP WHERE pengguna.idPengguna = ?";
         PreparedStatement stat = null;
         ResultSet rs = null;
 
@@ -131,6 +139,7 @@ public class OTPController implements OTPService {
             if (rs.next()) {
                 registerModel.setEmail(rs.getString("email"));
                 OTPModel.setStoredOTP(rs.getString("OTPVerifikasi1"));
+                OTPModel.setIdOTP(rs.getString("idOTP"));
                 EmailSender.sendOTP(registerModel.getEmail(), OTPModel.getStoredOTP());
             }
         } catch (Exception e) {
@@ -147,6 +156,33 @@ public class OTPController implements OTPService {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void destroyOTP(OTPModel OTPModel) {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(() -> {
+            PreparedStatement stat = null;
+            String sql = "UPDATE otp SET OTPVerifikasi1 = null WHERE idOTP=?";
+            try {
+                stat = conn.prepareStatement(sql);
+                stat.setString(1, OTPModel.getIdOTP());
+                stat.executeUpdate();
+                scheduler.shutdown();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                if (stat != null) {
+                    try {
+                        stat.close();
+                    } catch (Exception e) {
+                        System.err.println(e);
+                    }
+                }
+            }
+        }, 90, 1, TimeUnit.SECONDS);
+
     }
 
 }

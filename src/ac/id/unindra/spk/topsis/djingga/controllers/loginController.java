@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import ac.id.unindra.spk.topsis.djingga.models.OTPModel;
 import ac.id.unindra.spk.topsis.djingga.models.loginModel;
-import ac.id.unindra.spk.topsis.djingga.models.registerModel;
 import ac.id.unindra.spk.topsis.djingga.services.OTPService;
 import ac.id.unindra.spk.topsis.djingga.services.loginService;
 import ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection;
@@ -16,6 +14,8 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 public class loginController implements loginService {
     private Connection conn = new DatabaseConnection().getConnection();
     private NotificationManager notificationManager = new NotificationManager();
+    OTPService OTPService = new OTPController();
+      
 
     @Override
     public void processLogin(loginModel loginModel) {
@@ -40,7 +40,7 @@ public class loginController implements loginService {
                     loginModel.setIdOTP(rs.getString("idOTP"));
                     loginModel.setEmail(rs.getString("email"));
                     if (loginModel.getStatus().equalsIgnoreCase("pending")) {
-                        OTPService OTPService = new OTPController();
+                       
                         OTPService.resendOTP(loginModel);
                         loginViewController loginViewController = new loginViewController();
                         loginViewController.runPane = true;
@@ -60,6 +60,14 @@ public class loginController implements loginService {
 
         } catch (Exception e) {
             System.err.println("e");
+        }finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
         }
 
     }

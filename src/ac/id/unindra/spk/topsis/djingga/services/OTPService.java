@@ -9,5 +9,6 @@ public interface OTPService {
     void setOTP(OTPModel OTPModel, boolean resetOTP);
     void resendOTP(loginModel loginModel);
     void sendOTP(registerModel registerModel, OTPModel OTPModel);
+    void destroyOTP(OTPModel OTPModel);
     
 }

@@ -42,11 +42,11 @@ public class registerController implements registerService {
 
                 OTPModel.setStoredOTP(storedOTP);
                 OTPModel.setIdOTP(idOTP);
-                
+
                 OTPService.setOTP(OTPModel, false);
                 OTPService.sendOTP(registerModel, OTPModel);
                 loginViewController loginViewController = new loginViewController();
-                loginViewController.runPane=true;
+                loginViewController.runPane = true;
                 loginViewController.idUser = registerModel.getIdUser();
 
                 notificationManager.notification("Berhasil", "Akun Anda berhasil dibuat");
@@ -72,7 +72,7 @@ public class registerController implements registerService {
         PreparedStatement stat = null;
         ResultSet rs = null;
         boolean usernameIsValid = false;
-        String sql = "SELECT COUNT(*) AS count FROM pengguna WHERE namaPengguna = ?";
+        String sql = "SELECT COUNT(*) AS count FROM pengguna WHERE LOWER(namaPengguna) = LOWER(?)";
 
         try {
             stat = conn.prepareStatement(sql);
@@ -89,14 +89,16 @@ public class registerController implements registerService {
             }
         } catch (Exception e) {
             System.out.println(e);
+        }finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
         }
         return usernameIsValid;
-    }
-
-    @Override
-    public void updateStatusAccount(registerModel registerModel, OTPModel OTPModel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateStatusAccount'");
     }
 
 }

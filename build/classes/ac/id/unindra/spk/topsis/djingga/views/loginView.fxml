@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ac.id.unindra.spk.topsis.djingga.controllers.loginViewController">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: black;">
+         <children>
+            <ImageView fx:id="imgLogo" fitHeight="591.0" fitWidth="1000.0" layoutX="-250.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="500.0" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: white;">
+         <children>
+            <AnchorPane fx:id="registerPane" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: white;">
+               <children>
+                  <MFXTextField fx:id="registFullname" floatMode="BORDER" floatingText="Nama Lengkap" layoutX="35.0" layoutY="110.0" prefHeight="51.0" prefWidth="430.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="45" />
+                  <MFXTextField fx:id="registUsername" floatMode="BORDER" floatingText="Nama Pengguna" layoutX="35.0" layoutY="173.0" prefHeight="51.0" prefWidth="430.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="20" />
+                  <MFXTextField fx:id="registEmail" floatMode="BORDER" floatingText="Email" layoutX="35.0" layoutY="235.0" prefHeight="51.0" prefWidth="430.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="30" />
+                  <MFXPasswordField fx:id="registPassword" floatMode="BORDER" floatingText="Kata Sandi" layoutX="35.0" layoutY="300.0" prefHeight="51.0" prefWidth="430.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="14" />
+                  <MFXPasswordField fx:id="registPasswordValidation" floatMode="BORDER" floatingText="Konfirmasi Kata Sandi" layoutX="35.0" layoutY="362.0" prefHeight="51.0" prefWidth="430.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="14" />
+                  <Label layoutX="79.0" layoutY="47.0" text="PENDAFTARAN AKUN">
+                     <font>
+                        <Font name="Roboto Bold" size="34.0" />
+                     </font>
+                  </Label>
+                  <MFXButton buttonType="RAISED" layoutX="154.0" layoutY="452.0" onMouseClicked="#register" prefHeight="51.0" prefWidth="192.0" style="-fx-background-color: BLACK;" text="DAFTAR" textFill="WHITE" />
+                  <MFXButton buttonType="RAISED" layoutX="154.0" layoutY="523.0" onMouseClicked="#loginPane" prefHeight="51.0" prefWidth="192.0" style="-fx-background-color: white;" text="BATAL" textFill="#6f6f6f" />
+                  <MFXButton layoutX="444.0" layoutY="6.0" onMouseClicked="#exit" text=" ">
+                     <graphic>
+                        <MaterialIconView glyphName="CLOSE" size="30" />
+                     </graphic>
+                  </MFXButton>
+                  <MaterialIconView glyphName="CLOSE" size="30" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="loginPane" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: white;">
+               <children>
+                  <MFXTextField fx:id="txtUsername" floatMode="BORDER" floatingText="Nama Pengguna" layoutX="71.0" layoutY="143.0" prefHeight="51.0" prefWidth="361.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="20">
+                     <font>
+                        <Font name="Roboto" size="13.0" />
+                     </font>
+                  </MFXTextField>
+                  <MFXPasswordField fx:id="txtPassword" floatMode="BORDER" floatingText="Kata Sandi" layoutX="71.0" layoutY="219.0" prefHeight="51.0" prefWidth="361.0" style="-mfx-main: black; -fx-border-color: gray;" textLimit="14" />
+                  <MFXButton id="btnLogin" fx:id="btnSignIn" buttonType="RAISED" depthLevel="LEVEL3" layoutX="152.0" layoutY="330.0" onMouseClicked="#login" prefHeight="51.0" prefWidth="200.0" style="-fx-background-color: black;" text="MASUK" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </MFXButton>
+                  <MFXButton id="btnRegister" fx:id="btnSignUp" buttonType="RAISED" layoutX="152.0" layoutY="396.0" onMouseClicked="#registerPane" prefHeight="51.0" prefWidth="200.0" rippleColor="#b2b2b2" style="-fx-background-color: white;" text="DAFTAR" textFill="#6f6f6f">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </MFXButton>
+                  <Label layoutX="62.0" layoutY="75.0" text="SISTEM PENDUKUNG KEPUTUSAN">
+                     <font>
+                        <Font name="Roboto Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="71.0" layoutY="277.0" text="Lupa Password ?" />
+                  <MFXButton layoutX="444.0" layoutY="6.0" onMouseClicked="#exit" text=" ">
+                     <graphic>
+                        <MaterialIconView glyphName="CLOSE" size="30" />
+                     </graphic>
+                  </MFXButton>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="successPane" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fx:id="accountSuccessCreateImage" fitHeight="261.0" fitWidth="256.0" layoutX="118.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/3d-casual-life-happy-smiling-young-man-with-laptop-celebrating-success.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="314.0" prefHeight="28.0" prefWidth="389.0" text="MASUKAN KODE OTP ANDA" textOverrun="CLIP">
+                     <font>
+                        <Font name="Roboto Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <MFXButton id="btnLogin" fx:id="btnLogin" buttonType="RAISED" depthLevel="LEVEL5" layoutX="134.0" layoutY="532.0" onMouseClicked="#loginPane" prefHeight="51.0" prefWidth="233.0" style="-fx-background-color: white;" text="KEMBALI KE HALAMAN LOGIN" textFill="#6f6f6f">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </MFXButton>
+                  <MFXButton layoutX="444.0" layoutY="6.0" onMouseClicked="#exit" text=" ">
+                     <graphic>
+                        <MaterialIconView glyphName="CLOSE" size="30" />
+                     </graphic>
+                  </MFXButton>
+                  <MaterialIconView glyphName="CLOSE" size="30" />
+                  <Label fx:id="accountSuccessCreateMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="52.0" layoutY="342.0" prefHeight="28.0" prefWidth="389.0" text="UNTUK MENGAKTIFKAN AKUN" textOverrun="CLIP">
+                     <font>
+                        <Font name="Roboto Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="accountNotConfirmImage" fitHeight="261.0" fitWidth="256.0" layoutX="119.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/casual-life-3d-young-man-with-closed-eyes-working-on-laptop-and-holding-head.png" />
+                     </image>
+                  </ImageView>
+                  <MFXTextField fx:id="otpEntered" alignment="CENTER" floatMode="DISABLED" layoutX="89.0" layoutY="372.0" prefHeight="51.0" prefWidth="316.0" style="-fx-border-color: gray; -mfx-main: black;">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </MFXTextField>
+                  <MFXButton id="btnLogin" fx:id="btnConfirm" buttonType="RAISED" depthLevel="LEVEL4" layoutX="134.0" layoutY="467.0" onMouseClicked="#otp" prefHeight="51.0" prefWidth="233.0" style="-fx-background-color: black;" text="KONFIRMASI" textFill="WHITE">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </MFXButton>
+                  <Label fx:id="countdownOTP" layoutX="89.0" layoutY="430.0" text="Kirim Ulang Kode Verifikasi (Dalam 30 Detik)">
+                     <font>
+                        <Font name="Roboto" size="13.0" />
+                     </font></Label>
+                  <Label fx:id="accountNotConfirmMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="26.0" text="AKUN BELUM DIKONFIRMASI">
+                     <font>
+                        <Font name="Roboto Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="accountSuccessMessage" alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="26.0" text="AKUN BERHASIL TERDAFTAR">
+                     <font>
+                        <Font name="Roboto Bold" size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
