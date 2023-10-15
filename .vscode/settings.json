@@ -5,7 +5,8 @@
             "/Volumes/HDD/Development/java/fontawesome/fontawesomefx-commons-9.1.2.jar",
             "/Volumes/HDD/Development/java/fontawesome/fontawesomefx-materialicons-2.2.0-9.1.2.jar",
             "/Volumes/HDD/Development/java/java-mail-1.4.jar",
-            "/Volumes/HDD/Development/java/activation.jar"
+            "/Volumes/HDD/Development/java/activation.jar",
+            "/Volumes/HDD/Development/java/javax.mail.jar"
         ],
         "exclude": [
             "lib/EmailSender/java-mail-1.4.jar",

@@ -5,7 +5,7 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 
 public class NotificationManager {
-    public void notification(String title, String message){
+    public static void notification(String title, String message){
                     Notifications notification = Notifications.create();
                     notification.title(title);
                     notification.text(message);

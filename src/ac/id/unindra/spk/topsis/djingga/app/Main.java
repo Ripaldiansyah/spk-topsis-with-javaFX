@@ -9,7 +9,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class Main extends Application {
-    private double xOffset ,yOffset = 0;
+    private double xOffset, yOffset = 0;
+
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/loginView.fxml"));
@@ -20,21 +21,20 @@ public class Main extends Application {
             yOffset = event.getSceneY();
         });
 
-        // Menangani event mouseDragged untuk menggeser jendela
         root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        
+
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
-        
-    }
 
+    }
 
     public static void main(String[] args) {
+
         launch(args);
     }
-    
+
 }

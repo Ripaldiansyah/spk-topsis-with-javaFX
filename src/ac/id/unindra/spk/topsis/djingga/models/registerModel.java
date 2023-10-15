@@ -1,7 +1,7 @@
 package ac.id.unindra.spk.topsis.djingga.models;
 
-public class loginModel {
-    private String idUser, fullName, username, password, role, status, idOTP, email;
+public class registerModel {
+    private String idUser, fullName, username, password, passswordVerification, role, accountStatus, email, idOTP;
 
     public String getIdUser() {
         return idUser;
@@ -35,6 +35,14 @@ public class loginModel {
         this.password = password;
     }
 
+    public String getPassswordVerification() {
+        return passswordVerification;
+    }
+
+    public void setPassswordVerification(String passswordVerification) {
+        this.passswordVerification = passswordVerification;
+    }
+
     public String getRole() {
         return role;
     }
@@ -43,20 +51,12 @@ public class loginModel {
         this.role = role;
     }
 
-    public String getStatus() {
-        return status;
+    public String getAccountStatus() {
+        return accountStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getIdOTP() {
-        return idOTP;
-    }
-
-    public void setIdOTP(String idOTP) {
-        this.idOTP = idOTP;
+    public void setAccountStatus(String accountStatus) {
+        this.accountStatus = accountStatus;
     }
 
     public String getEmail() {
@@ -65,6 +65,14 @@ public class loginModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getIdOTP() {
+        return idOTP;
+    }
+
+    public void setIdOTP(String idOTP) {
+        this.idOTP = idOTP;
     }
 
 }
