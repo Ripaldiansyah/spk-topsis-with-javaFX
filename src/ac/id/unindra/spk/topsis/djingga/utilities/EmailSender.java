@@ -5,7 +5,6 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
-
 public class EmailSender {
     public static void sendOTP(String emailRecipent, String OTPStored) {
         final String username = "Ripaldiansyah13@gmail.com";
@@ -14,7 +13,7 @@ public class EmailSender {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "127.0.0.1");
-        props.put("mail.smtp.port", "1001");
+        props.put("mail.smtp.port", "1025");
 
         Session session = Session.getInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {

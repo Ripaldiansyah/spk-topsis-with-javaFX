@@ -158,7 +158,8 @@ public class loginViewController implements Initializable {
         return valid;
     }
 
-    private boolean passwordValidation(MFXPasswordField MFXPasswordField, MFXPasswordField MFXPasswordFieldVerification) {
+    private boolean passwordValidation(MFXPasswordField MFXPasswordField,
+            MFXPasswordField MFXPasswordFieldVerification) {
         boolean valid = false;
         if (MFXPasswordField.getText().equals(MFXPasswordFieldVerification.getText())) {
             valid = true;
@@ -274,7 +275,11 @@ public class loginViewController implements Initializable {
             } else {
                 registerModel.setIdUser(idUser);
                 OTPService.checkOTP(OTPModel, registerModel);
-                activePane(loginPane);
+                if (runPane) {
+                    activePane(loginPane);
+                    NotificationManager.notification("Berhasil", "Kamu berhasil mendaftarkan akun kamu");
+                }
+
             }
 
             disableButton(btnConfirm, "Terlalu banyak percobaan OTP salah. Tunggu sebentar sebelum mencoba lagi.");
@@ -285,7 +290,7 @@ public class loginViewController implements Initializable {
     }
 
     @FXML
-    private void resetPassword(MouseEvent event){
+    private void resetPassword(MouseEvent event) {
         if (resetPasswordValidation()) {
             if (passwordValidation(resetPasswordField, resetPasswordValidationField)) {
                 String password = BCrypt.withDefaults().hashToString(12, resetPasswordField.getText().toCharArray());
@@ -295,9 +300,8 @@ public class loginViewController implements Initializable {
                 if (runPane) {
                     activePane(loginPane);
                 }
-                runPane =false;
+                runPane = false;
             }
-            
 
         }
 
@@ -326,7 +330,7 @@ public class loginViewController implements Initializable {
     @FXML
     private void register(MouseEvent event) {
         if (registrationValidation()) {
-            if (passwordValidation(registPassword,registPasswordValidation)) {
+            if (passwordValidation(registPassword, registPasswordValidation)) {
                 String fullName = registFullname.getText();
                 String username = registUsername.getText();
                 String password = BCrypt.withDefaults().hashToString(12, registPassword.getText().toCharArray());

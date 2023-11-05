@@ -45,7 +45,7 @@ public class OTPController implements OTPService {
                             stat = conn.prepareStatement(sqlUpdate);
                             stat.setString(1, registerModel.getIdUser());
                             stat.executeUpdate();
-                            loginViewController.runPane=true;
+                            loginViewController.runPane = true;
                         } catch (Exception e) {
                             System.err.println(e);
                         } finally {
@@ -58,6 +58,7 @@ public class OTPController implements OTPService {
                             }
                         }
                     } else {
+                        loginViewController.runPane = false;
                         NotificationManager.notification("Peringatan", "Kode OTP yang dimasukan tidak sesuai");
                     }
                 } else {
@@ -172,7 +173,7 @@ public class OTPController implements OTPService {
 
             } catch (Exception e) {
                 e.printStackTrace();
-            }finally {
+            } finally {
                 if (stat != null) {
                     try {
                         stat.close();

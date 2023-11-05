@@ -51,6 +51,7 @@ public class registerController implements registerService {
 
                 notificationManager.notification("Berhasil", "Akun Anda berhasil dibuat");
             } else {
+                loginViewController.runPane = false;
                 notificationManager.notification("Peringatan", "Username Telah Terdaftar");
             }
 
@@ -89,7 +90,7 @@ public class registerController implements registerService {
             }
         } catch (Exception e) {
             System.out.println(e);
-        }finally {
+        } finally {
             if (stat != null) {
                 try {
                     stat.close();

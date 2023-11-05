@@ -40,6 +40,7 @@ public class forgotPasswordController implements forgotPasswordService {
                 loginViewController.runPane = true;
 
             } else {
+                loginViewController.runPane = false;
                 NotificationManager.notification("Peringatan", "Akun tidak ditemukan");
             }
 
@@ -55,15 +56,15 @@ public class forgotPasswordController implements forgotPasswordService {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-            }finally {
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (Exception e) {
-                    System.err.println(e);
+            } finally {
+                if (stat != null) {
+                    try {
+                        stat.close();
+                    } catch (Exception e) {
+                        System.err.println(e);
+                    }
                 }
             }
-        }
         }
 
     }
