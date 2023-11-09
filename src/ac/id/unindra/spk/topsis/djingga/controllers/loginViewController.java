@@ -27,12 +27,18 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class loginViewController implements Initializable {
 
@@ -113,9 +119,11 @@ public class loginViewController implements Initializable {
 
     private NotificationManager notificationManager = new NotificationManager();
     public static boolean runPane = false;
+    public static boolean main = false;
     public static String idUser, idUserResetPassword;
     private int clickCount = 0;
     private int countdownSeconds = 90;
+    private double xOffset, yOffset = 0;
 
     registerModel registerModel = new registerModel();
     OTPService OTPService = new OTPController();
@@ -217,7 +225,7 @@ public class loginViewController implements Initializable {
     }
 
     @FXML
-    private void login(MouseEvent event) {
+    private void login(MouseEvent event) throws IOException {
         if (loginValidation()) {
 
             String username = txtUsername.getText();
@@ -228,6 +236,12 @@ public class loginViewController implements Initializable {
             loginService.processLogin(loginModel);
             if (runPane) {
                 unSuccessPane();
+            }
+            if (main) {
+                mainApp();
+                ((Node) event.getSource()).getScene().getWindow().hide();
+                NotificationManager.notification("Berhasil Masuk", "Selamat Datang " + loginModel.getFullName());
+                appViewController.idUser = loginModel.getIdUser();
             }
 
         } else {
@@ -473,6 +487,26 @@ public class loginViewController implements Initializable {
         activePane(successPane);
         activeMessage(accountNotConfirmMessage, accountNotConfirmImage);
         countdownOTP.setDisable(true);
+    }
+
+    public void mainApp() throws IOException {
+        Stage stage = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/appView.fxml"));
+        Scene scene = new Scene(root);
+
+        root.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.show();
 
     }
 

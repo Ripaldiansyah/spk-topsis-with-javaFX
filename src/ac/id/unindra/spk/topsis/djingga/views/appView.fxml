@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ac.id.unindra.spk.topsis.djingga.controllers.appViewController">
+   <children>
+      <VBox prefHeight="630.0" prefWidth="172.0" spacing="10.0" style="-fx-background-color: black;">
+         <children>
+            <ImageView fitHeight="115.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/media/logo.jpg" />
+               </image>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" top="5.0" />
+               </VBox.margin>
+            </ImageView>
+            <MFXButton fx:id="dashboardButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Dashboard" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/icons8_dashboard_layout_23px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="userButton" alignment="TOP_LEFT" onMouseClicked="#userManagement" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Pengguna" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/icons8_user_23px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="periodButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Periode" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/icons8_Time_23px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="criteriaButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Kriteria" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/icons8_checklist_23px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="alternativeButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Alternatif" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/icons8_star_23px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="gradeButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Nilai" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/icons8_task_23px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="settingButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Pengaturan" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/icons8_settings_23px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MFXButton>
+            <MFXButton fx:id="logoutButton" alignment="TOP_LEFT" onMouseClicked="#logout" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Logout" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/media/icons8_logout_23px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MFXButton>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+      <Pane fx:id="pane" layoutX="172.0" layoutY="23.0" prefHeight="600.0" prefWidth="829.0" />
+      <MFXButton fx:id="closeButton" layoutX="958.0" onMouseClicked="#exit" prefHeight="26.0" prefWidth="37.0" style="-fx-background-color: #f4f4f4;" text=" ">
+         <graphic>
+            <ImageView fitHeight="19.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/media/icons8_close_20px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </MFXButton>
+   </children>
+</AnchorPane>

@@ -6,38 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "loginViewController",
+            "name": "TableViewSample",
             "request": "launch",
-            "mainClass": "ac.id.unindra.spk.topsis.djingga.controllers.loginViewController",
-            "projectName": "SPK TOPSIS Djingga_79db5bd0"
-        },
-        {
-            "type": "java",
-            "name": "CurrentDate",
-            "request": "launch",
-            "mainClass": "ac.id.unindra.spk.topsis.djingga.utilities.CurrentDate",
-            "projectName": "SPK TOPSIS Djingga_79db5bd0"
-        },
-        {
-            "type": "java",
-            "name": "EmailSender",
-            "request": "launch",
-            "mainClass": "ac.id.unindra.spk.topsis.djingga.utilities.EmailSender",
-            "projectName": "SPK TOPSIS Djingga_79db5bd0"
-        },
-        {
-            "type": "java",
-            "name": "OTPGenerator",
-            "request": "launch",
-            "mainClass": "ac.id.unindra.spk.topsis.djingga.utilities.OTPGenerator",
-            "projectName": "SPK TOPSIS Djingga_79db5bd0"
-        },
-        {
-            "type": "java",
-            "name": "DatabaseConnection",
-            "request": "launch",
-            "mainClass": "ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection",
-            "projectName": "SPK TOPSIS Djingga_79db5bd0"
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.app.TableViewSample",
+            "projectName": "spk-topsis-with-javaFX_7947e34d"
         },
         {
             "type": "java",
@@ -50,8 +22,8 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "ac.id.unindra.spk.topsis.djingga.app.Main",
-            "projectName": "SPK TOPSIS Djingga_79db5bd0",
-            "vmArgs": "--module-path /Volumes/HDD/Development/java/javafx-sdk-21/lib --add-modules javafx.controls,javafx.fxml"
+            "projectName": "spk-topsis-with-javaFX_7947e34d",
+            "vmArgs": "--module-path \"D:/JAVA JDK/javafx-sdk-21.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }

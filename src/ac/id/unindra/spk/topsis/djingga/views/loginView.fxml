@@ -107,7 +107,7 @@
                         <Font name="Roboto Bold" size="14.0" />
                      </font>
                   </MFXButton>
-                  <Label fx:id="countdownOTP" layoutX="89.0" layoutY="430.0" onMouseClicked="#dialogOTPClick" stylesheets="@../resources/css/login.css" text="Kirim Ulang Kode Verifikasi (Dalam 30 Detik)">
+                  <Label fx:id="countdownOTP" layoutX="89.0" layoutY="430.0" onMouseClicked="#dialogOTPClick" stylesheets="@../resources/css/sytles.css" text="Kirim Ulang Kode Verifikasi (Dalam 30 Detik)">
                      <font>
                         <Font name="Roboto" size="13.0" />
                      </font>
@@ -183,7 +183,7 @@
                         <Font name="Roboto Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelForgot" layoutX="71.0" layoutY="277.0" onMouseClicked="#searchPane" stylesheets="@../resources/css/login.css" text="Lupa Password ?" />
+                  <Label fx:id="labelForgot" layoutX="71.0" layoutY="277.0" onMouseClicked="#searchPane" stylesheets="@../resources/css/styles.css" text="Lupa Password ?" />
                   <MFXButton layoutX="444.0" layoutY="6.0" onMouseClicked="#exit" text=" ">
                      <graphic>
                         <MaterialIconView glyphName="CLOSE" size="30" />

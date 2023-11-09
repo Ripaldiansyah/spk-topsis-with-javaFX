@@ -1,0 +1,25 @@
+.label {
+    -fx-font-family: "Roboto"; 
+    -fx-font-size: 13;
+    -fx-text-fill: #000000;
+    -fx-cursor: hand;
+}
+
+.label:hover {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #bfb3b3; 
+}
+
+.button{
+    -fx-background-color: #000000;
+    -fx-text-fill : #ffffff;
+}
+
+.button:hover {
+    -fx-background-color: #2c2c2c;
+    -fx-text-fill : #ffffff;
+}
+.button:focused  {
+    -fx-background-color: #2c2c2c; 
+    -fx-text-fill:  #ffffff;
+}

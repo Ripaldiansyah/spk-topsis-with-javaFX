@@ -46,20 +46,20 @@ public class loginController implements loginService {
                         loginViewController.runPane = true;
                         loginViewController.idUser = loginModel.getIdUser();
                     } else {
-                        notificationManager.notification("Berhasil Masuk",
-                                "Selamat Datang " + loginModel.getFullName());
-                                  loginViewController.runPane = false;
+                                  loginViewController.main = true;
                     }
                 } else {
                     notificationManager.notification("Peringatan", "Periksa Kembali password Anda");
+                    stat.close();
                 }
 
             } else {
                 notificationManager.notification("Tidak Dapat Masuk", "Nama Pengguna Tidak terdaftar");
+                stat.close();
             }
 
         } catch (Exception e) {
-            System.err.println("e");
+            System.err.println(e);
         }finally {
             if (stat != null) {
                 try {

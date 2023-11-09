@@ -1,13 +1,11 @@
 .label {
+    -fx-font-family: "Roboto"; 
     -fx-font-size: 13;
-    -fx-text-fill: #000000; 
-    -fx-font-weight: bold; 
+    -fx-text-fill: #000000;
     -fx-cursor: hand;
 }
 
-
 .label:hover {
-    -fx-text-fill: #ffffff; 
-    -fx-font-size: 15;
-    -fx-background-color :  #bfb3b3#bfb3b3;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #bfb3b3; 
 }
