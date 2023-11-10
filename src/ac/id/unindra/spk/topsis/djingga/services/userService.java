@@ -7,8 +7,9 @@ import ac.id.unindra.spk.topsis.djingga.models.userTableModel;
 import javafx.collections.ObservableList;
 
 public interface userService {
-    ObservableList<userTableModel> getDataUser();
+    ObservableList<userTableModel> getDataUser(userModel userModel);
     void updateUser(userModel userModel);
+    void updateUserStatus(userModel userModel);
     void deleteUser(userModel userModel);
     void countData(userModel userModel);
     

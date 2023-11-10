@@ -15,15 +15,19 @@ public class userController implements userService {
 
     public static final ObservableList<userTableModel> ObservableList = null;
     private Connection conn = new DatabaseConnection().getConnection();
+    userModel userModel = new userModel();
 
     @Override
-    public ObservableList<userTableModel> getDataUser() {
-        String sql = "SELECT * FROM Pengguna";
+    public ObservableList<userTableModel> getDataUser(userModel userModel) {
+        String sql = "SELECT * FROM Pengguna LIMIT 12 OFFSET ?";
         PreparedStatement stat = null;
+        int fetchingData = userModel.getActivePaginate();
         ResultSet rs = null;
 
         try {
             stat = conn.prepareStatement(sql);
+            stat.setInt(1,fetchingData );
+           
             rs = stat.executeQuery();
             ObservableList<userTableModel> userData = FXCollections.observableArrayList();
             while (rs.next()) {
@@ -84,10 +88,10 @@ public class userController implements userService {
                 userModel.setTotalActive(rs.getInt("jumlah_active"));
                 userModel.setTotalPending(rs.getInt("jumlah_pending"));
 
-                if (userModel.getTotalAccout() / 10 == 0) {
+                if (userModel.getTotalAccout() <12) {
                     userModel.setTotalPaginate(1);
                 } else {
-                    userModel.setTotalPaginate(userModel.getTotalAccout() / 10);
+                    userModel.setTotalPaginate((int) Math.ceil((double) userModel.getTotalAccout() / 12.0));
                 }
             }
 
@@ -102,6 +106,12 @@ public class userController implements userService {
                 }
             }
         }
+    }
+
+    @Override
+    public void updateUserStatus(ac.id.unindra.spk.topsis.djingga.models.userModel userModel) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateUserStatus'");
     }
 
 }

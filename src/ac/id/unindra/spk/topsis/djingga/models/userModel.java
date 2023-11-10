@@ -2,8 +2,9 @@ package ac.id.unindra.spk.topsis.djingga.models;
 
 
 public class userModel {
-    int totalAccout, totalAdmin, totalUser, totalActive, totalPending, totalPaginate;
+    int totalAccout, totalAdmin, totalUser, totalActive, totalPending, totalPaginate, activePaginate;
     String id,fullName,username,role,accountStatus;
+
     public int getTotalAccout() {
         return totalAccout;
     }
@@ -69,6 +70,12 @@ public class userModel {
     }
     public void setAccountStatus(String accountStatus) {
         this.accountStatus = accountStatus;
+    }
+    public int getActivePaginate() {
+        return activePaginate;
+    }
+    public void setActivePaginate(int activePaginate) {
+        this.activePaginate = activePaginate;
     }
 
     

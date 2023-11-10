@@ -175,7 +175,7 @@
             </VBox>
          </children>
       </HBox>
-      <TableView fx:id="userTable" layoutX="37.0" layoutY="139.0" prefHeight="322.0" prefWidth="763.0">
+      <TableView fx:id="userTable" layoutX="37.0" layoutY="139.0" onMouseClicked="#getSelectedData" prefHeight="316.0" prefWidth="763.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="176.0" text="ID" />
           <TableColumn fx:id="fullnameColumn" prefWidth="173.0" text="Nama Lengkap" />
@@ -187,12 +187,12 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <MFXPagination fx:id="userPagination" layoutX="219.0" layoutY="468.0" maxWidth="600.0" minWidth="250.0" pagesToShow="10" prefHeight="32.0" prefWidth="400.0" stylesheets="@../resources/css/styles.css" />
+      <MFXPagination fx:id="userPagination" ellipseString=".." layoutX="219.0" layoutY="468.0" maxWidth="600.0" minWidth="250.0" onMouseClicked="#userPaginationControl" pagesToShow="10" prefHeight="32.0" prefWidth="400.0" stylesheets="@../resources/css/styles.css" />
       <HBox fx:id="actionHbox" layoutX="37.0" layoutY="471.0" maxWidth="191.0" minWidth="154.0" prefHeight="26.0" prefWidth="154.0">
          <children>
-            <MFXButton fx:id="activeButton" alignment="TOP_CENTER" depthLevel="LEVEL0" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: #f4f4f4;" text="Active">
+            <MFXButton fx:id="actionButton" alignment="TOP_CENTER" depthLevel="LEVEL0" prefHeight="25.0" prefWidth="73.0" style="-fx-background-color: #f4f4f4;" text="Active">
                <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgAction" fitHeight="17.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../resources/media/icons8_ok_10px.png" />
                      </image>
@@ -216,5 +216,17 @@
             </MFXButton>
          </children>
       </HBox>
+      <MFXButton fx:id="changeRoleButton" alignment="TOP_CENTER" layoutX="682.0" layoutY="472.0" prefHeight="25.0" prefWidth="118.0" style="-fx-background-color: #f4f4f4;" text="Jadikan Admin">
+         <graphic>
+            <ImageView fx:id="imgChangeRole" fitHeight="23.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/media/icons8_Admin_Settings_Male_25px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </MFXButton>
    </children>
 </Pane>
