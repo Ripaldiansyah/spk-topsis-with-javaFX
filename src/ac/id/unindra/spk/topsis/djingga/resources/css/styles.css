@@ -84,3 +84,67 @@ Popup
     -fx-background-color: #808080;
     -fx-background-radius: 5;
 }
+
+.mfx-combo-box {
+    -mfx-main: black; 
+    -fx-border-color: gray; 
+    -mfx-track-color: rgb(230, 230, 230);
+    -mfx-thumb-color: rgb(137, 137, 137);
+    -mfx-thumb-hover-color: rgb(89, 88, 91);
+    -mfx-gap: 0;
+    -fx-padding: 3 5 3 5;
+    
+  }
+  
+  .mfx-combo-box .caret .mfx-ripple-generator {
+    -mfx-ripple-color: gray;
+    -mfx-ripple-radius: 14;
+  }
+  
+  .mfx-combo-box .thumb .mfx-ripple-generator {
+  -mfx-ripple-color: transparent;
+}
+.mfx-combo-box .combo-popup .virtual-flow .mfx-list-cell {
+    -fx-background-color: transparent; 
+    -fx-text-fill: black; 
+}
+
+.mfx-combo-box .combo-popup .virtual-flow .mfx-list-cell:hover {
+    -fx-background-color: transparent; 
+}
+
+  
+  .mfx-combo-box .combo-popup .virtual-flow {
+    -fx-background-radius: 5;
+    -fx-border-color: #ebebeb;
+    -fx-border-radius: 5;
+  }
+ 
+  
+  .mfx-combo-box:disabled .caret .mfx-font-icon {
+    -mfx-color: #bcbcbc;
+  }
+  .mfx-combo-box-cell {
+    -mfx-main: black; 
+    -mfx-hover: rgba(0, 0, 0, 0.1); 
+    -mfx-selected: rgba(0, 0, 0, 0.2);
+    -fx-background-color: transparent;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+  }
+  
+  .mfx-combo-box-cell:hover {
+    -fx-background-color: -mfx-hover;
+  }
+  
+  .mfx-combo-box-cell:selected {
+    -fx-background-color: -mfx-selected;
+  }
+  
+  .mfx-combo-box-cell .data-label {
+    -fx-font-family: "Open Sans Regular";
+    -fx-text-fill: black; 
+  }
+  
+  
+  

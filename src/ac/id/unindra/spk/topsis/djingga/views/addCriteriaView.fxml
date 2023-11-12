@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ac.id.unindra.spk.topsis.djingga.controllers.addCriteriaContoller">
+   <children>
+      <AnchorPane fx:id="setCriteria" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;">
+         <children>
+            <Pane layoutX="25.0" layoutY="25.0" prefHeight="550.0" prefWidth="781.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15;">
+               <children>
+                  <HBox fx:id="criteriaHbox" layoutX="10.0" layoutY="256.0" prefHeight="63.0" prefWidth="761.0">
+                     <children>
+                        <MFXTextField fx:id="criteria1" alignment="TOP_CENTER" floatingText="Nilai 1" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;" />
+                        <MFXTextField fx:id="criteria2" alignment="TOP_CENTER" floatingText="Nilai 2" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </MFXTextField>
+                        <MFXTextField fx:id="criteria3" alignment="TOP_CENTER" floatingText="Nilai 3" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </MFXTextField>
+                        <MFXTextField fx:id="criteria4" alignment="TOP_CENTER" floatingText="Nilai 4" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </MFXTextField>
+                        <MFXTextField fx:id="criteria5" alignment="TOP_CENTER" floatingText="Nilai 5" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </MFXTextField>
+                     </children>
+                  </HBox>
+                  <Text layoutX="294.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bobot Kriteria">
+                     <font>
+                        <Font name="System Bold" size="29.0" />
+                     </font>
+                  </Text>
+                  <HBox fx:id="buttonHbox" layoutX="241.0" layoutY="388.0" prefHeight="63.0" prefWidth="300.0">
+                     <children>
+                        <MFXButton fx:id="backButton" onMouseClicked="#backPane" prefHeight="63.0" prefWidth="140.0" style="-fx-background-color: black; -fx-text-fill: white;" text="KEMBALI">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </MFXButton>
+                        <MFXButton fx:id="saveButton" prefHeight="63.0" prefWidth="140.0" style="-fx-background-color: black; -fx-text-fill: white;" text="SIMPAN">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </MFXButton>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="nameCriteria" layoutX="-1.0" layoutY="-2.0" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;">
+         <children>
+            <Pane layoutX="189.0" layoutY="58.0" prefHeight="484.0" prefWidth="451.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20;">
+               <children>
+                  <Text layoutX="154.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tambah Kriteria">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Text>
+                  <VBox fx:id="nameCriteriaHbox" layoutX="53.0" layoutY="150.0" prefHeight="251.0" prefWidth="346.0" spacing="20.0">
+                     <children>
+                        <MFXTextField fx:id="criteriaName" floatMode="BORDER" floatingText="Nama Kriteria" prefHeight="46.0" prefWidth="346.0" style="-mfx-main: black; -fx-border-color: gray;" />
+                        <MFXComboBox fx:id="typeCriteria" floatMode="BORDER" floatingText="Jenis" prefHeight="46.0" prefWidth="346.0" stylesheets="@../resources/css/styles.css" />
+                        <MFXComboBox fx:id="valueWeight" floatMode="BORDER" floatingText="Bobot Nilai" prefHeight="46.0" prefWidth="346.0" style="-mfx-main: black;" stylesheets="@../resources/css/styles.css" />
+                        <MFXButton fx:id="nextButton" onMouseClicked="#nextPane" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: black; -fx-text-fill: WHITE;" text="LANJUT" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets left="113.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Roboto Bold" size="16.0" />
+                           </font>
+                        </MFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 
 public interface userService {
     ObservableList<userTableModel> getDataUser(userModel userModel);
-    void updateUser(userModel userModel);
+    void updateUserRole(userModel userModel);
     void updateUserStatus(userModel userModel);
     void deleteUser(userModel userModel);
     void countData(userModel userModel);

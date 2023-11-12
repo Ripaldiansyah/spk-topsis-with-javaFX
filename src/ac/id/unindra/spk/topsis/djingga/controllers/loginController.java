@@ -55,6 +55,7 @@ public class loginController implements loginService {
 
             } else {
                 notificationManager.notification("Tidak Dapat Masuk", "Nama Pengguna Tidak terdaftar");
+                loginViewController.runPane=false;
                 stat.close();
             }
 

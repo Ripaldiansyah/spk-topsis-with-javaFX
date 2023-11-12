@@ -2,18 +2,12 @@ package ac.id.unindra.spk.topsis.djingga.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.Function;
 
 import ac.id.unindra.spk.topsis.djingga.models.userModel;
 import ac.id.unindra.spk.topsis.djingga.models.userTableModel;
 import ac.id.unindra.spk.topsis.djingga.services.userService;
 import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXPagination;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTableView;
-import io.github.palexdev.materialfx.controls.base.MFXLabeled;
-import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -185,7 +179,6 @@ public class userViewController implements Initializable {
   @FXML
   private void getSelectedData(MouseEvent event) {
     SelectionModel<userTableModel> selectionModel = userTable.getSelectionModel();
-
     userTableModel selecetedModel = selectionModel.getSelectedItem();
     if (selecetedModel != null) {
       if (selecetedModel.getRole().equalsIgnoreCase("user")
@@ -220,8 +213,43 @@ public class userViewController implements Initializable {
         setImageActive();
         setImageUser();
       }
+
+      userModel.setId(selecetedModel.getId());
     }
 
+  }
+
+  private void refreshPage() {
+    setColumn();
+    setCount();
+    disableHbox(actionHbox);
+    disableChangeRoleButton(changeRoleButton);
+  }
+
+  @FXML
+  private void actionButton(MouseEvent event) {
+    String whatButton = actionButton.getText();
+    userModel.getId();
+    userModel.setAccountStatus(whatButton);
+    userService.updateUserStatus(userModel);
+    refreshPage();
+  }
+
+  @FXML
+  private void destroyAccount(MouseEvent event) {
+    userModel.getId();
+    userService.deleteUser(userModel);
+    refreshPage();
+  }
+
+  @FXML
+  private void changeRole(MouseEvent event) {
+    int length = changeRoleButton.getText().length();
+    String whatButton = changeRoleButton.getText().substring(length - 5);
+    userModel.getId();
+    userModel.setRole(whatButton);
+    userService.updateUserRole(userModel);
+    refreshPage();
   }
 
 }

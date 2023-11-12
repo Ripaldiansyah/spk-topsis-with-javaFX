@@ -8,6 +8,7 @@ import ac.id.unindra.spk.topsis.djingga.models.userModel;
 import ac.id.unindra.spk.topsis.djingga.models.userTableModel;
 import ac.id.unindra.spk.topsis.djingga.services.userService;
 import ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection;
+import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -26,8 +27,8 @@ public class userController implements userService {
 
         try {
             stat = conn.prepareStatement(sql);
-            stat.setInt(1,fetchingData );
-           
+            stat.setInt(1, fetchingData);
+
             rs = stat.executeQuery();
             ObservableList<userTableModel> userData = FXCollections.observableArrayList();
             while (rs.next()) {
@@ -56,15 +57,58 @@ public class userController implements userService {
     }
 
     @Override
-    public void updateUser(userModel userModel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+    public void updateUserRole(userModel userModel) {
+        PreparedStatement stat = null;
+        String sqlSetAdmin = "UPDATE pengguna SET level = 'Admin' Where idPengguna = ?";
+        String sqlSetUser = "UPDATE pengguna SET level = 'User' Where idPengguna = ?";
+
+        try {
+            if (userModel.getRole().equalsIgnoreCase("Admin")) {
+                stat = conn.prepareStatement(sqlSetAdmin);
+                stat.setString(1, userModel.getId());
+               
+            } else {
+                stat = conn.prepareStatement(sqlSetUser);
+                stat.setString(1, userModel.getId());
+                
+            }
+            stat.executeUpdate();
+            NotificationManager.notification("Perubahan disimpan", "Akun diatur "+userModel.getRole());
+            
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
     }
 
     @Override
     public void deleteUser(userModel userModel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+        PreparedStatement stat = null;
+        String sql = "DELETE FROM pengguna WHERE idPengguna = ?";
+        try {
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, userModel.getId());
+            stat.executeUpdate();
+            NotificationManager.notification("Berhasil dihapus", "Akun telah dihapus");
+            
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
     }
 
     @Override
@@ -88,7 +132,7 @@ public class userController implements userService {
                 userModel.setTotalActive(rs.getInt("jumlah_active"));
                 userModel.setTotalPending(rs.getInt("jumlah_pending"));
 
-                if (userModel.getTotalAccout() <12) {
+                if (userModel.getTotalAccout() < 12) {
                     userModel.setTotalPaginate(1);
                 } else {
                     userModel.setTotalPaginate((int) Math.ceil((double) userModel.getTotalAccout() / 12.0));
@@ -109,9 +153,35 @@ public class userController implements userService {
     }
 
     @Override
-    public void updateUserStatus(ac.id.unindra.spk.topsis.djingga.models.userModel userModel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUserStatus'");
-    }
+    public void updateUserStatus(userModel userModel) {
+        PreparedStatement stat = null;
+        String sqlSetActive = "UPDATE pengguna SET statusAkun = 'Active' Where idPengguna = ?";
+        String sqlSetPending = "UPDATE pengguna SET statusAkun = 'Pending' Where idPengguna = ?";
 
+        try {
+            if (userModel.getAccountStatus().equalsIgnoreCase("Active")) {
+                stat = conn.prepareStatement(sqlSetActive);
+                stat.setString(1, userModel.getId());
+               
+            } else {
+                stat = conn.prepareStatement(sqlSetPending);
+                stat.setString(1, userModel.getId());
+                
+            }
+            stat.executeUpdate();
+            NotificationManager.notification("Perubahan disimpan", "Akun diatur "+userModel.getAccountStatus());
+            
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+
+    }
 }
