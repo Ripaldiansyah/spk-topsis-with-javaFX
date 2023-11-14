@@ -79,7 +79,7 @@ public class forgotPasswordController implements forgotPasswordService {
             stat.setString(2, forgotPasswordModel.getIdUser());
             stat.executeUpdate();
             NotificationManager.notification("Berhasil", "Kata Sandi sudah diperbarui");
-            loginViewController.runPane = true;
+            loginViewController.resetPass = true;
         } catch (Exception e) {
             System.err.println(e);
         } finally {

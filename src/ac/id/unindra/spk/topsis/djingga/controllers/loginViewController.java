@@ -118,7 +118,7 @@ public class loginViewController implements Initializable {
     private Label labelInformation;
 
     private NotificationManager notificationManager = new NotificationManager();
-    public static boolean runPane = false;
+    public static boolean runPane,resetPass = false;
     public static boolean main = false;
     public static String idUser, idUserResetPassword;
     private int clickCount = 0;
@@ -311,7 +311,7 @@ public class loginViewController implements Initializable {
                 forgotPasswordModel.setPassword(password);
                 forgotPasswordModel.setIdUser(idUserResetPassword);
                 forgotPasswordService.resetPassword(forgotPasswordModel);
-                if (runPane) {
+                if (resetPass) {
                     activePane(loginPane);
                 }
                 runPane = false;

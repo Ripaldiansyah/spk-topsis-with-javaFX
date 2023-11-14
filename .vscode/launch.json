@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main_copy",
+            "request": "launch",
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.app.Main_copy",
+            "projectName": "spk-topsis-with-javaFX_7947e34d"
+        },
+        {
+            "type": "java",
             "name": "TableViewSample",
             "request": "launch",
             "mainClass": "ac.id.unindra.spk.topsis.djingga.app.TableViewSample",

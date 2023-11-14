@@ -16,8 +16,7 @@ public class registerController implements registerService {
     private Connection conn = new DatabaseConnection().getConnection();
     private NotificationManager notificationManager = new NotificationManager();
     OTPService OTPService = new OTPController();
-    registerService registerService = this;
-
+   
     @Override
     public void processRegistration(registerModel registerModel, OTPModel OTPModel) {
         PreparedStatement stat = null;

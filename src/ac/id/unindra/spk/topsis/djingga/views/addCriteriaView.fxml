@@ -11,13 +11,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ac.id.unindra.spk.topsis.djingga.controllers.addCriteriaContoller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ac.id.unindra.spk.topsis.djingga.controllers.addCriteriaViewContoller">
    <children>
       <AnchorPane fx:id="setCriteria" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;">
          <children>
-            <Pane layoutX="25.0" layoutY="25.0" prefHeight="550.0" prefWidth="781.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15;">
+            <Pane prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <HBox fx:id="criteriaHbox" layoutX="10.0" layoutY="256.0" prefHeight="63.0" prefWidth="761.0">
+                  <HBox fx:id="criteriaHbox" layoutX="34.0" layoutY="269.0" prefHeight="63.0" prefWidth="761.0">
                      <children>
                         <MFXTextField fx:id="criteria1" alignment="TOP_CENTER" floatingText="Nilai 1" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;" />
                         <MFXTextField fx:id="criteria2" alignment="TOP_CENTER" floatingText="Nilai 2" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
@@ -42,19 +42,19 @@
                         </MFXTextField>
                      </children>
                   </HBox>
-                  <Text layoutX="294.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bobot Kriteria">
+                  <Text layoutX="318.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bobot Kriteria">
                      <font>
                         <Font name="System Bold" size="29.0" />
                      </font>
                   </Text>
-                  <HBox fx:id="buttonHbox" layoutX="241.0" layoutY="388.0" prefHeight="63.0" prefWidth="300.0">
+                  <HBox fx:id="buttonHbox" layoutX="265.0" layoutY="389.0" prefHeight="63.0" prefWidth="300.0">
                      <children>
                         <MFXButton fx:id="backButton" onMouseClicked="#backPane" prefHeight="63.0" prefWidth="140.0" style="-fx-background-color: black; -fx-text-fill: white;" text="KEMBALI">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </MFXButton>
-                        <MFXButton fx:id="saveButton" prefHeight="63.0" prefWidth="140.0" style="-fx-background-color: black; -fx-text-fill: white;" text="SIMPAN">
+                        <MFXButton fx:id="saveButton" onMouseClicked="#setCriteriaProcess" prefHeight="63.0" prefWidth="140.0" style="-fx-background-color: black; -fx-text-fill: white;" text="SIMPAN">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -80,9 +80,9 @@
                   <VBox fx:id="nameCriteriaHbox" layoutX="53.0" layoutY="150.0" prefHeight="251.0" prefWidth="346.0" spacing="20.0">
                      <children>
                         <MFXTextField fx:id="criteriaName" floatMode="BORDER" floatingText="Nama Kriteria" prefHeight="46.0" prefWidth="346.0" style="-mfx-main: black; -fx-border-color: gray;" />
-                        <MFXComboBox fx:id="typeCriteria" floatMode="BORDER" floatingText="Jenis" prefHeight="46.0" prefWidth="346.0" stylesheets="@../resources/css/styles.css" />
+                        <MFXComboBox fx:id="criteriaType" floatMode="BORDER" floatingText="Jenis" prefHeight="46.0" prefWidth="346.0" stylesheets="@../resources/css/styles.css" />
                         <MFXComboBox fx:id="valueWeight" floatMode="BORDER" floatingText="Bobot Nilai" prefHeight="46.0" prefWidth="346.0" style="-mfx-main: black;" stylesheets="@../resources/css/styles.css" />
-                        <MFXButton fx:id="nextButton" onMouseClicked="#nextPane" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: black; -fx-text-fill: WHITE;" text="LANJUT" textFill="WHITE">
+                        <MFXButton fx:id="nextButton" onMouseClicked="#addCriteriaProcess" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: black; -fx-text-fill: WHITE;" text="LANJUT" textFill="WHITE">
                            <VBox.margin>
                               <Insets left="113.0" />
                            </VBox.margin>
