@@ -147,4 +147,6 @@ Popup
   }
   
   
-  
+  .mfx-checkbox {
+    -mfx-main: black; 
+  }

@@ -1,9 +1,9 @@
 package ac.id.unindra.spk.topsis.djingga.services;
 
 import ac.id.unindra.spk.topsis.djingga.models.OTPModel;
-import ac.id.unindra.spk.topsis.djingga.models.registerModel;
+import ac.id.unindra.spk.topsis.djingga.models.RegisterModel;
 
-public interface registerService {
-    void processRegistration(registerModel registerModel, OTPModel OTPModel);
-    boolean checkUsernameRegistered(registerModel registerModel);
+public interface RegisterService {
+    void processRegistration(RegisterModel registerModel, OTPModel OTPModel);
+    boolean checkUsernameRegistered(RegisterModel registerModel);
 }

@@ -3,9 +3,8 @@ package ac.id.unindra.spk.topsis.djingga.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import ac.id.unindra.spk.topsis.djingga.models.userModel;
-import ac.id.unindra.spk.topsis.djingga.models.userTableModel;
-import ac.id.unindra.spk.topsis.djingga.services.userService;
+import ac.id.unindra.spk.topsis.djingga.models.UserModel;
+import ac.id.unindra.spk.topsis.djingga.models.UserTableModel;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPagination;
 import javafx.collections.FXCollections;
@@ -22,8 +21,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import ac.id.unindra.spk.topsis.djingga.services.UserService;
 
-public class userViewController implements Initializable {
+public class UserViewController implements Initializable {
 
   @FXML
   private Text countAccount;
@@ -50,21 +50,21 @@ public class userViewController implements Initializable {
   private MFXButton changeRoleButton;
 
   @FXML
-  private TableView userTable;
+  private TableView<UserTableModel> userTable;
 
   @FXML
   private MFXPagination userPagination;
 
   @FXML
-  private TableColumn idColumn;
+  private TableColumn <UserTableModel, String> idColumn;
   @FXML
-  private TableColumn fullnameColumn;
+  private TableColumn <UserTableModel, String> fullnameColumn;
   @FXML
-  private TableColumn usernameColumn;
+  private TableColumn <UserTableModel, String> usernameColumn;
   @FXML
-  private TableColumn roleColumn;
+  private TableColumn <UserTableModel, String> roleColumn;
   @FXML
-  private TableColumn accountStatColumn;
+  private TableColumn <UserTableModel, String> accountStatColumn;
 
   @FXML
   private ImageView imgAction;
@@ -74,11 +74,11 @@ public class userViewController implements Initializable {
   @FXML
   private MFXButton removeButton;
 
-  private userService userService = new userController();
-  private userModel userModel = new userModel();
+  private UserService userService = new UserController();
+  private UserModel userModel = new UserModel();
   int activePage;
 
-  ObservableList<userTableModel> data = FXCollections.observableArrayList();
+  ObservableList<UserTableModel> data = FXCollections.observableArrayList();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -104,15 +104,15 @@ public class userViewController implements Initializable {
 
   private void setColumn() {
 
-    final ObservableList<userTableModel> ObservableList = FXCollections.observableArrayList();
+    final ObservableList<UserTableModel> ObservableList = FXCollections.observableArrayList();
     userModel.setActivePaginate(activePage);
     ObservableList.addAll(userService.getDataUser(userModel));
 
-    idColumn.setCellValueFactory(new PropertyValueFactory<userTableModel, String>("id"));
-    fullnameColumn.setCellValueFactory(new PropertyValueFactory<userTableModel, String>("fullName"));
-    usernameColumn.setCellValueFactory(new PropertyValueFactory<userTableModel, String>("username"));
-    roleColumn.setCellValueFactory(new PropertyValueFactory<userTableModel, String>("role"));
-    accountStatColumn.setCellValueFactory(new PropertyValueFactory<userTableModel, String>("accountStatus"));
+    idColumn.setCellValueFactory(new PropertyValueFactory<UserTableModel, String>("id"));
+    fullnameColumn.setCellValueFactory(new PropertyValueFactory<UserTableModel, String>("fullName"));
+    usernameColumn.setCellValueFactory(new PropertyValueFactory<UserTableModel, String>("username"));
+    roleColumn.setCellValueFactory(new PropertyValueFactory<UserTableModel, String>("role"));
+    accountStatColumn.setCellValueFactory(new PropertyValueFactory<UserTableModel, String>("accountStatus"));
 
     userTable.setItems(ObservableList);
 
@@ -178,8 +178,8 @@ public class userViewController implements Initializable {
 
   @FXML
   private void getSelectedData(MouseEvent event) {
-    SelectionModel<userTableModel> selectionModel = userTable.getSelectionModel();
-    userTableModel selecetedModel = selectionModel.getSelectedItem();
+    SelectionModel<UserTableModel> selectionModel = userTable.getSelectionModel();
+    UserTableModel selecetedModel = selectionModel.getSelectedItem();
     if (selecetedModel != null) {
       if (selecetedModel.getRole().equalsIgnoreCase("user")
           &&

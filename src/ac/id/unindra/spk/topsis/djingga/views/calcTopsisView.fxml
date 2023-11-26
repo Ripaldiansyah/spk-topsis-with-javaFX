@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import org.controlsfx.control.Rating?>
+
+<Pane fx:id="calcTopsisPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ac.id.unindra.spk.topsis.djingga.controllers.calcTopsisViewController">
+   <children>
+      <AnchorPane fx:id="selectCriteria" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;">
+         <children>
+            <Pane cache="true" layoutX="189.0" layoutY="58.0" prefHeight="484.0" prefWidth="451.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20;">
+               <children>
+                  <Text layoutX="165.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pilih Kriteria" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Text>
+                  <MFXScrollPane hbarPolicy="NEVER" layoutX="66.0" layoutY="111.0" prefHeight="263.0" prefWidth="346.0">
+                     <content>
+                        <VBox fx:id="boxContainerCriteria" prefHeight="50.0" prefWidth="347.0" spacing="10.0">
+                           <children>
+                              <MFXCheckbox fx:id="criteriaComboBox" style="-mfx-main: black;" />
+                           </children>
+                           <padding>
+                              <Insets left="50.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </MFXScrollPane>
+                  <HBox layoutX="113.0" layoutY="398.0" prefHeight="46.0" prefWidth="252.0" spacing="20.0">
+                     <children>
+                        <MFXButton fx:id="backButtonCategory" buttonType="RAISED" onMouseClicked="#backToSelectingCategory" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="KEMBALI">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXButton>
+                        <MFXButton fx:id="nextButtonCalc" buttonType="RAISED" onMouseClicked="#gotoCalcTopsis" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: black; -fx-text-fill: WHITE;" text="LANJUT" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXButton>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="calcTopsisScene" prefHeight="600.0" prefWidth="829.0">
+         <children>
+            <Pane prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;">
+               <children>
+                  <Text layoutX="30.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hitung Topsis">
+                     <font>
+                        <Font name="Roboto Black" size="22.0" />
+                     </font>
+                  </Text>
+                  <MFXScrollPane layoutX="30.0" layoutY="86.0" prefHeight="435.0" prefWidth="769.0">
+                     <content>
+                        <VBox prefHeight="430.0" prefWidth="765.0">
+                           <children>
+                              <HBox fx:id="headerListHbox" prefHeight="29.0" prefWidth="765.0" spacing="140.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Alternatif">
+                                       <font>
+                                          <Font name="Roboto" size="15.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="-20.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <Text fx:id="criteriaText" strokeType="OUTSIDE" strokeWidth="0.0" text="Kriteria">
+                                       <font>
+                                          <Font name="Roboto" size="15.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="10.0" left="40.0" right="50.0" top="10.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="dataHbox" prefHeight="400.0" prefWidth="765.0">
+                                 <children>
+                                    <VBox fx:id="alternativeVbox" prefHeight="400.0" prefWidth="170.0" spacing="24.0">
+                                       <children>
+                                          <Text fx:id="alternativeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Alternatif">
+                                             <font>
+                                                <Font name="Roboto" size="15.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" top="20.0" />
+                                       </padding>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox fx:id="criteriaVbox" prefHeight="400.0" prefWidth="170.0" spacing="10.0">
+                                       <children>
+                                          <Rating fx:id="ratingStar" partialRating="true" rating="1.0" />
+                                          <MFXTextField fx:id="ratingField" floatMode="DISABLED" prefHeight="32.0" prefWidth="174.0" style="-mfx-main: black;" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </MFXScrollPane>
+                  <MFXButton fx:id="calcTopsis" buttonType="RAISED" layoutX="684.0" layoutY="528.0" onMouseClicked="#calcTopsisField" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: black; -fx-text-fill: WHITE;" text="HITUNG" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </MFXButton>
+                  <MFXButton fx:id="backButtonCategory1" buttonType="RAISED" layoutX="553.0" layoutY="528.0" onMouseClicked="#backToSelectingCriteria" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: white; -fx-text-fill: gray;" text="KEMBALI">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </MFXButton>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="selectCategory" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;">
+         <children>
+            <Pane layoutX="189.0" layoutY="58.0" prefHeight="484.0" prefWidth="451.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20;">
+               <children>
+                  <Text layoutX="120.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pilih Kategori Alternatif" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Text>
+                  <VBox fx:id="nameCriteriaHbox" layoutX="53.0" layoutY="173.0" prefHeight="139.0" prefWidth="346.0" spacing="20.0">
+                     <children>
+                        <MFXComboBox fx:id="alternativeCategory" floatMode="BORDER" floatingText="Kategori" prefHeight="50.0" prefWidth="346.0" stylesheets="@../resources/css/styles.css" />
+                        <MFXButton fx:id="nextButton" onMouseClicked="#nextPane" prefHeight="46.0" prefWidth="115.0" style="-fx-background-color: black; -fx-text-fill: WHITE;" text="LANJUT" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets left="113.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </MFXButton>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

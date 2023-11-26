@@ -1,7 +1,7 @@
 package ac.id.unindra.spk.topsis.djingga.services;
 
-import ac.id.unindra.spk.topsis.djingga.models.loginModel;
+import ac.id.unindra.spk.topsis.djingga.models.LoginModel;
 
-public interface loginService {
-    void processLogin(loginModel loginModel);
+public interface LoginService {
+    void processLogin(LoginModel loginModel);
 }

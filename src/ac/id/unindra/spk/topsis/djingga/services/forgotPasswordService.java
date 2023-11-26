@@ -1,10 +1,10 @@
 package ac.id.unindra.spk.topsis.djingga.services;
 
 
-import ac.id.unindra.spk.topsis.djingga.models.forgotPasswordModel;
-import ac.id.unindra.spk.topsis.djingga.models.loginModel;
+import ac.id.unindra.spk.topsis.djingga.models.ForgotPasswordModel;
+import ac.id.unindra.spk.topsis.djingga.models.LoginModel;
 
-public interface forgotPasswordService {
-    void searchAccount(forgotPasswordModel forgotPasswordModel, loginModel loginModel );
-    void resetPassword(forgotPasswordModel forgotPasswordModel);
+public interface ForgotPasswordService {
+    void searchAccount(ForgotPasswordModel forgotPasswordModel, LoginModel loginModel );
+    void resetPassword(ForgotPasswordModel forgotPasswordModel);
 }

@@ -5,20 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import ac.id.unindra.spk.topsis.djingga.models.OTPModel;
-import ac.id.unindra.spk.topsis.djingga.models.registerModel;
+import ac.id.unindra.spk.topsis.djingga.models.RegisterModel;
 import ac.id.unindra.spk.topsis.djingga.services.OTPService;
-import ac.id.unindra.spk.topsis.djingga.services.registerService;
 import ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection;
 import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
 import ac.id.unindra.spk.topsis.djingga.utilities.OTPGenerator;
+import ac.id.unindra.spk.topsis.djingga.services.RegisterService;
 
-public class registerController implements registerService {
+public class RegisterController implements RegisterService {
     private Connection conn = new DatabaseConnection().getConnection();
     private NotificationManager notificationManager = new NotificationManager();
     OTPService OTPService = new OTPController();
    
     @Override
-    public void processRegistration(registerModel registerModel, OTPModel OTPModel) {
+    public void processRegistration(RegisterModel registerModel, OTPModel OTPModel) {
         PreparedStatement stat = null;
         String sql = "INSERT INTO pengguna(idPengguna,namaLengkap,email,namaPengguna,kataSandi,level,statusAkun,idOTP)VALUES(?,?,?,?,?,?,?,?)";
         try {
@@ -44,13 +44,13 @@ public class registerController implements registerService {
 
                 OTPService.setOTP(OTPModel, false);
                 OTPService.sendOTP(registerModel, OTPModel);
-                loginViewController loginViewController = new loginViewController();
+                LoginViewController loginViewController = new LoginViewController();
                 loginViewController.runPane = true;
                 loginViewController.idUser = registerModel.getIdUser();
 
                 notificationManager.notification("Berhasil", "Akun Anda berhasil dibuat");
             } else {
-                loginViewController.runPane = false;
+                LoginViewController.runPane = false;
                 notificationManager.notification("Peringatan", "Username Telah Terdaftar");
             }
 
@@ -68,7 +68,7 @@ public class registerController implements registerService {
     }
 
     @Override
-    public boolean checkUsernameRegistered(registerModel registerModel) {
+    public boolean checkUsernameRegistered(RegisterModel registerModel) {
         PreparedStatement stat = null;
         ResultSet rs = null;
         boolean usernameIsValid = false;

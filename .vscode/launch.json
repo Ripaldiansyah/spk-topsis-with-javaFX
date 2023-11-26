@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main_test",
+            "request": "launch",
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.app.Main_test",
+            "projectName": "spk-topsis-with-javaFX_7947e34d"
+        },
+        {
+            "type": "java",
+            "name": "Main_copy",
+            "request": "launch",
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.controllers.Main_copy",
+            "projectName": "spk-topsis-with-javaFX_7947e34d"
+        },
+        {
+            "type": "java",
+            "name": "Main__copy",
+            "request": "launch",
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.app.Main__copy",
+            "projectName": "spk-topsis-with-javaFX_7947e34d"
+        },
+        {
+            "type": "java",
             "name": "Main_copy",
             "request": "launch",
             "mainClass": "ac.id.unindra.spk.topsis.djingga.app.Main_copy",

@@ -11,31 +11,31 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ac.id.unindra.spk.topsis.djingga.controllers.addCriteriaViewContoller">
+<Pane fx:id="addCriteria" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ac.id.unindra.spk.topsis.djingga.controllers.AddCriteriaViewContoller">
    <children>
       <AnchorPane fx:id="setCriteria" prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;">
          <children>
-            <Pane prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #ffffff;">
+            <Pane prefHeight="600.0" prefWidth="829.0" style="-fx-background-color: #f4f4f4;">
                <children>
                   <HBox fx:id="criteriaHbox" layoutX="34.0" layoutY="269.0" prefHeight="63.0" prefWidth="761.0">
                      <children>
-                        <MFXTextField fx:id="criteria1" alignment="TOP_CENTER" floatingText="Nilai 1" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;" />
-                        <MFXTextField fx:id="criteria2" alignment="TOP_CENTER" floatingText="Nilai 2" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
+                        <MFXTextField fx:id="criteria1" alignment="TOP_CENTER" floatingText="Nilai 1" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-background-color: #f4f4f4; -fx-border-color: gray;" />
+                        <MFXTextField fx:id="criteria2" alignment="TOP_CENTER" floatingText="Nilai 2" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray; -fx-background-color: #f4f4f4;">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
                         </MFXTextField>
-                        <MFXTextField fx:id="criteria3" alignment="TOP_CENTER" floatingText="Nilai 3" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
+                        <MFXTextField fx:id="criteria3" alignment="TOP_CENTER" floatingText="Nilai 3" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray; -fx-background-color: #f4f4f4;">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
                         </MFXTextField>
-                        <MFXTextField fx:id="criteria4" alignment="TOP_CENTER" floatingText="Nilai 4" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
+                        <MFXTextField fx:id="criteria4" alignment="TOP_CENTER" floatingText="Nilai 4" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray; -fx-background-color: #f4f4f4;">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
                         </MFXTextField>
-                        <MFXTextField fx:id="criteria5" alignment="TOP_CENTER" floatingText="Nilai 5" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray;">
+                        <MFXTextField fx:id="criteria5" alignment="TOP_CENTER" floatingText="Nilai 5" prefHeight="63.0" prefWidth="140.0" style="-mfx-main: black; -fx-border-color: gray; -fx-background-color: #f4f4f4;">
                            <HBox.margin>
                               <Insets left="15.0" />
                            </HBox.margin>
@@ -72,7 +72,7 @@
          <children>
             <Pane layoutX="189.0" layoutY="58.0" prefHeight="484.0" prefWidth="451.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20;">
                <children>
-                  <Text layoutX="154.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tambah Kriteria">
+                  <Text fx:id="criteriaText" layoutX="154.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tambah Kriteria">
                      <font>
                         <Font name="System Bold" size="19.0" />
                      </font>

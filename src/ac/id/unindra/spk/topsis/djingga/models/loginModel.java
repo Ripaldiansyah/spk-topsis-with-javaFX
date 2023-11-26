@@ -1,6 +1,6 @@
 package ac.id.unindra.spk.topsis.djingga.models;
 
-public class loginModel {
+public class LoginModel {
     private String idUser, fullName, username, password, role, status, idOTP, email;
 
     public String getIdUser() {

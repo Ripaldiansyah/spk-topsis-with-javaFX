@@ -3,23 +3,27 @@ package ac.id.unindra.spk.topsis.djingga.controllers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-import ac.id.unindra.spk.topsis.djingga.models.userModel;
-import ac.id.unindra.spk.topsis.djingga.models.userTableModel;
-import ac.id.unindra.spk.topsis.djingga.services.userService;
+import ac.id.unindra.spk.topsis.djingga.models.TopsisModel;
+import ac.id.unindra.spk.topsis.djingga.models.UserModel;
+import ac.id.unindra.spk.topsis.djingga.models.UserTableModel;
 import ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection;
 import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import ac.id.unindra.spk.topsis.djingga.services.UserService;
 
-public class userController implements userService {
+public class UserController implements UserService {
 
-    public static final ObservableList<userTableModel> ObservableList = null;
+    public static final ObservableList<UserTableModel> ObservableList = null;
     private Connection conn = new DatabaseConnection().getConnection();
-    userModel userModel = new userModel();
+    UserModel userModel = new UserModel();
 
     @Override
-    public ObservableList<userTableModel> getDataUser(userModel userModel) {
+    public ObservableList<UserTableModel> getDataUser(UserModel userModel) {
         String sql = "SELECT * FROM Pengguna LIMIT 12 OFFSET ?";
         PreparedStatement stat = null;
         int fetchingData = userModel.getActivePaginate();
@@ -30,9 +34,9 @@ public class userController implements userService {
             stat.setInt(1, fetchingData);
 
             rs = stat.executeQuery();
-            ObservableList<userTableModel> userData = FXCollections.observableArrayList();
+            ObservableList<UserTableModel> userData = FXCollections.observableArrayList();
             while (rs.next()) {
-                userTableModel user = new userTableModel(
+                UserTableModel user = new UserTableModel(
                         rs.getString("idPengguna"),
                         rs.getString("namaLengkap"),
                         rs.getString("namaPengguna"),
@@ -57,7 +61,7 @@ public class userController implements userService {
     }
 
     @Override
-    public void updateUserRole(userModel userModel) {
+    public void updateUserRole(UserModel userModel) {
         PreparedStatement stat = null;
         String sqlSetAdmin = "UPDATE pengguna SET level = 'Admin' Where idPengguna = ?";
         String sqlSetUser = "UPDATE pengguna SET level = 'User' Where idPengguna = ?";
@@ -89,7 +93,7 @@ public class userController implements userService {
     }
 
     @Override
-    public void deleteUser(userModel userModel) {
+    public void deleteUser(UserModel userModel) {
         PreparedStatement stat = null;
         String sql = "DELETE FROM pengguna WHERE idPengguna = ?";
         try {
@@ -112,7 +116,7 @@ public class userController implements userService {
     }
 
     @Override
-    public void countData(userModel userModel) {
+    public void countData(UserModel userModel) {
         String sql = "SELECT  COUNT(*) AS total_pengguna,\r\n" + //
                 "    SUM(CASE WHEN level = 'Admin' THEN 1 ELSE 0 END) AS jumlah_admin,\r\n" + //
                 "    SUM(CASE WHEN level = 'User' THEN 1 ELSE 0 END) AS jumlah_user,\r\n" + //
@@ -153,7 +157,7 @@ public class userController implements userService {
     }
 
     @Override
-    public void updateUserStatus(userModel userModel) {
+    public void updateUserStatus(UserModel userModel) {
         PreparedStatement stat = null;
         String sqlSetActive = "UPDATE pengguna SET statusAkun = 'Active' Where idPengguna = ?";
         String sqlSetPending = "UPDATE pengguna SET statusAkun = 'Pending' Where idPengguna = ?";
@@ -184,4 +188,6 @@ public class userController implements userService {
         }
 
     }
+  
+    
 }

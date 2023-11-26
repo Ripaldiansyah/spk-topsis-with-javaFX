@@ -1,12 +1,20 @@
 package ac.id.unindra.spk.topsis.djingga.models;
 
-public class addCriteriaModel {
-    String criteriaName,criteriaType, valueWeight,criteria1,criteria2,criteria3,criteria4,criteria5;
+public class CriteriaModel {
+    String criteriaId, criteriaName,criteriaType, valueWeight,criteria1,criteria2,criteria3,criteria4,criteria5;
     int totalCriteria, totalBenefits, totalCost, totalPaginate, activePaginate;
 
 
     public int getTotalPaginate() {
         return totalPaginate;
+    }
+
+    public String getCriteriaId() {
+        return criteriaId;
+    }
+
+    public void setCriteriaId(String criteriaId) {
+        this.criteriaId = criteriaId;
     }
 
     public void setTotalPaginate(int totalPaginate) {

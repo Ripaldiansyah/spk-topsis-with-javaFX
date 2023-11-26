@@ -1,6 +1,6 @@
 package ac.id.unindra.spk.topsis.djingga.models;
 
-public class forgotPasswordModel {
+public class ForgotPasswordModel {
     private String idUser, username ,password, email, idOTP;
 
     public String getIdUser() {

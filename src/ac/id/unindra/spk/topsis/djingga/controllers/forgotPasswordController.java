@@ -5,20 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import ac.id.unindra.spk.topsis.djingga.models.forgotPasswordModel;
-import ac.id.unindra.spk.topsis.djingga.models.loginModel;
+import ac.id.unindra.spk.topsis.djingga.models.ForgotPasswordModel;
+import ac.id.unindra.spk.topsis.djingga.models.LoginModel;
 import ac.id.unindra.spk.topsis.djingga.services.OTPService;
-import ac.id.unindra.spk.topsis.djingga.services.forgotPasswordService;
 import ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection;
 import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
+import ac.id.unindra.spk.topsis.djingga.services.ForgotPasswordService;
 
-public class forgotPasswordController implements forgotPasswordService {
-    forgotPasswordService forgotPasswordService = this;
+public class ForgotPasswordController implements ForgotPasswordService {
+    ForgotPasswordService forgotPasswordService = this;
     private Connection conn = new DatabaseConnection().getConnection();
     OTPService OTPService = new OTPController();
 
     @Override
-    public void searchAccount(forgotPasswordModel forgotPasswordModel, loginModel loginModel) {
+    public void searchAccount(ForgotPasswordModel forgotPasswordModel, LoginModel loginModel) {
         String sql = "SELECT idPengguna, idOTP FROM pengguna WHERE LOWER(namaPengguna) = LOWER(?) AND LOWER(email) = LOWER(?)";
         PreparedStatement stat = null;
         ResultSet rs = null;
@@ -34,13 +34,13 @@ public class forgotPasswordController implements forgotPasswordService {
                 forgotPasswordModel.setIdOTP(rs.getString("idOTP"));
                 loginModel.setIdOTP(forgotPasswordModel.getIdOTP());
                 loginModel.setEmail(forgotPasswordModel.getEmail());
-                loginViewController.idUserResetPassword = forgotPasswordModel.getIdUser();
+                LoginViewController.idUserResetPassword = forgotPasswordModel.getIdUser();
 
                 OTPService.resendOTP(loginModel);
-                loginViewController.runPane = true;
+                LoginViewController.runPane = true;
 
             } else {
-                loginViewController.runPane = false;
+                LoginViewController.runPane = false;
                 NotificationManager.notification("Peringatan", "Akun tidak ditemukan");
             }
 
@@ -70,7 +70,7 @@ public class forgotPasswordController implements forgotPasswordService {
     }
 
     @Override
-    public void resetPassword(forgotPasswordModel forgotPasswordModel) {
+    public void resetPassword(ForgotPasswordModel forgotPasswordModel) {
         PreparedStatement stat = null;
         String sql = "UPDATE pengguna SET kataSandi = ? WHERE idPengguna = ?";
         try {
@@ -79,7 +79,7 @@ public class forgotPasswordController implements forgotPasswordService {
             stat.setString(2, forgotPasswordModel.getIdUser());
             stat.executeUpdate();
             NotificationManager.notification("Berhasil", "Kata Sandi sudah diperbarui");
-            loginViewController.resetPass = true;
+            LoginViewController.resetPass = true;
         } catch (Exception e) {
             System.err.println(e);
         } finally {

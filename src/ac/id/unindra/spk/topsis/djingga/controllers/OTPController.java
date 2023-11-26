@@ -9,8 +9,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import ac.id.unindra.spk.topsis.djingga.models.OTPModel;
-import ac.id.unindra.spk.topsis.djingga.models.loginModel;
-import ac.id.unindra.spk.topsis.djingga.models.registerModel;
+import ac.id.unindra.spk.topsis.djingga.models.LoginModel;
+import ac.id.unindra.spk.topsis.djingga.models.RegisterModel;
 import ac.id.unindra.spk.topsis.djingga.services.OTPService;
 import ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection;
 import ac.id.unindra.spk.topsis.djingga.utilities.EmailSender;
@@ -23,7 +23,7 @@ public class OTPController implements OTPService {
     OTPModel OTPModel = new OTPModel();
 
     @Override
-    public void checkOTP(OTPModel OTPModel, registerModel registerModel) {
+    public void checkOTP(OTPModel OTPModel, RegisterModel registerModel) {
         PreparedStatement stat = null;
         String sql = "SELECT pengguna.namaLengkap, OTP.OTPVerifikasi1 FROM pengguna INNER JOIN OTP ON pengguna.idOTP = OTP.idOTP WHERE pengguna.idPengguna = ?";
         ResultSet rs = null;
@@ -37,6 +37,7 @@ public class OTPController implements OTPService {
                 registerModel.setFullName(rs.getString("namaLengkap"));
                 OTPModel.setStoredOTP(rs.getString("OTPVerifikasi1"));
 
+
                 if (OTPModel.getStoredOTP() != null) {
                     if (OTPModel.getStoredOTP().equalsIgnoreCase(OTPModel.getEnteredOTP())) {
                         String sqlUpdate = "UPDATE pengguna SET statusAkun = 'Active' WHERE idPengguna=?";
@@ -45,7 +46,7 @@ public class OTPController implements OTPService {
                             stat = conn.prepareStatement(sqlUpdate);
                             stat.setString(1, registerModel.getIdUser());
                             stat.executeUpdate();
-                            loginViewController.runPane = true;
+                            LoginViewController.runPane = true;
                         } catch (Exception e) {
                             System.err.println(e);
                         } finally {
@@ -58,7 +59,7 @@ public class OTPController implements OTPService {
                             }
                         }
                     } else {
-                        loginViewController.runPane = false;
+                        LoginViewController.runPane = false;
                         NotificationManager.notification("Peringatan", "Kode OTP yang dimasukan tidak sesuai");
                     }
                 } else {
@@ -93,6 +94,7 @@ public class OTPController implements OTPService {
                 stat = conn.prepareStatement(sqlUpdate);
                 stat.setString(1, OTPModel.getStoredOTP());
                 stat.setString(2, OTPModel.getIdOTP());
+              
 
             } else {
                 stat = conn.prepareStatement(sqlInsert);
@@ -115,19 +117,20 @@ public class OTPController implements OTPService {
     }
 
     @Override
-    public void resendOTP(loginModel loginModel) {
+    public void resendOTP(LoginModel loginModel) {
         String storedOTP = OTPGenerator.generateOTP(6);
         String idOTP = loginModel.getIdOTP();
         EmailSender.sendOTP(loginModel.getEmail(), storedOTP);
 
-        OTPModel.setStoredOTP(storedOTP);
         OTPModel.setIdOTP(idOTP);
+        OTPModel.setStoredOTP(storedOTP);
+        
 
         OTPService.setOTP(OTPModel, true);
     }
 
     @Override
-    public void sendOTP(registerModel registerModel, OTPModel OTPModel) {
+    public void sendOTP(RegisterModel registerModel, OTPModel OTPModel) {
         String sql = "SELECT pengguna.email, OTP.idOTP , OTP.OTPVerifikasi1 FROM pengguna INNER JOIN OTP ON pengguna.idOTP = OTP.idOTP WHERE pengguna.idPengguna = ?";
         PreparedStatement stat = null;
         ResultSet rs = null;

@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class appViewController implements Initializable {
+public class AppViewController implements Initializable {
     @FXML
     private MFXButton alternativeButton;
 
@@ -35,7 +35,7 @@ public class appViewController implements Initializable {
     private MFXButton dashboardButton;
 
     @FXML
-    private MFXButton gradeButton;
+    private MFXButton topsisButton;
 
     @FXML
     private MFXButton logoutButton;
@@ -56,7 +56,10 @@ public class appViewController implements Initializable {
     private MFXButton addCriteriaButton;
 
     @FXML
-    private MFXButton readCriteriaButton;
+    private MFXButton viewCriteriaButton;
+
+    @FXML
+    private MFXButton viewAlternativeButton;
 
     @FXML
     private ImageView imgCollapse;
@@ -64,9 +67,27 @@ public class appViewController implements Initializable {
     @FXML
     private VBox vboxMenu;
 
+    @FXML
+    private MFXButton addAlternativeButton;
+
+    @FXML
+    private MFXButton calcTopsisButton;
+
+    @FXML
+    private MFXButton viewTopsisButton;
+
+    @FXML
+    private ImageView imgCollapse2;
+
+    @FXML
+    private ImageView imgCollapse3;
+
+    @FXML
+    private MFXButton readAlternativeButton;
+
     private double xOffset, yOffset = 0;
     public static String idUser;
-    int click = 0;
+    int clickCriteriaButton, clickAlternativeButton, clickTopsisButton = 0;
 
     @FXML
     private void exit(MouseEvent event) {
@@ -77,7 +98,7 @@ public class appViewController implements Initializable {
     private void logout(MouseEvent event) throws IOException {
 
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/loginView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/LoginView.fxml"));
         Scene scene = new Scene(root);
 
         root.setOnMousePressed(events -> {
@@ -96,14 +117,50 @@ public class appViewController implements Initializable {
 
         ((Node) event.getSource()).getScene().getWindow().hide();
         NotificationManager.notification("Logout", "Berhasil Keluar");
-        loginViewController.main = false;
+        LoginViewController.main = false;
     }
 
     @FXML
     private void userManagement(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/userView.fxml"));
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/UserView.fxml"));
+            Parent newContent = loader.load();
+            pane.getChildren().setAll(newContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void addAlternative(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/AddAlternativeView.fxml"));
+            Parent newContent = loader.load();
+            pane.getChildren().setAll(newContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void alternativeView(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/AlternativeView.fxml"));
+            Parent newContent = loader.load();
+            pane.getChildren().setAll(newContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void criteriaView(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/CriteriaView.fxml"));
             Parent newContent = loader.load();
             pane.getChildren().setAll(newContent);
         } catch (Exception e) {
@@ -115,7 +172,19 @@ public class appViewController implements Initializable {
     private void addCriteria(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/addCriteriaView.fxml"));
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/AddCriteriaView.fxml"));
+            Parent newContent = loader.load();
+            pane.getChildren().setAll(newContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void calcTopsis(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/calcTopsisView.fxml"));
             Parent newContent = loader.load();
             pane.getChildren().setAll(newContent);
         } catch (Exception e) {
@@ -126,43 +195,93 @@ public class appViewController implements Initializable {
     @FXML
     private void showCriteria(MouseEvent event) {
 
-        if (click == 0) {
+        if (clickCriteriaButton == 0) {
             showCriteriaMenu();
-            click++;
+            clickCriteriaButton++;
         } else {
             hideCriteriaMenu();
-            click --;
+            clickCriteriaButton--;
         }
     }
 
-    private void showCriteriaMenu() {
+    @FXML
+    private void showAlternative(MouseEvent event) {
+
+        if (clickAlternativeButton == 0) {
+            showAlternativeMenu();
+            clickAlternativeButton++;
+        } else {
+            hideAlternativeMenu();
+            clickAlternativeButton--;
+        }
+    }
+
+    @FXML
+    private void showTopsis(MouseEvent event) {
+
+        if (clickTopsisButton == 0) {
+            showTopsisMenu();
+            clickTopsisButton++;
+        } else {
+            hideTopsisMenu();
+            clickTopsisButton--;
+        }
+    }
+
+    private void showMenu(MFXButton MFXButtonTop, MFXButton MFXButtonDown, ImageView ImageView) {
         Image img = new Image("/ac/id/unindra/spk/topsis/djingga/resources/media/icons8_expand_arrow_23px.png");
-        imgCollapse.setImage(img);
-        addCriteriaButton.setVisible(true);
-        readCriteriaButton.setVisible(true);
-        addCriteriaButton.setDisable(false);
-        readCriteriaButton.setDisable(false);
-        addCriteriaButton.setManaged(true);
-        readCriteriaButton.setManaged(true);
+        ImageView.setImage(img);
+        MFXButtonTop.setVisible(true);
+        MFXButtonDown.setVisible(true);
+        MFXButtonTop.setDisable(false);
+        MFXButtonDown.setDisable(false);
+        MFXButtonTop.setManaged(true);
+        MFXButtonDown.setManaged(true);
         vboxMenu.layout();
     }
 
-    private void hideCriteriaMenu() {
+    private void hideMenu(MFXButton MFXButtonTop, MFXButton MFXButtonDown, ImageView ImageView) {
         Image img = new Image("/ac/id/unindra/spk/topsis/djingga/resources/media/icons8_collapse_arrow_23px.png");
-        imgCollapse.setImage(img);
-        addCriteriaButton.setVisible(false);
-        readCriteriaButton.setVisible(false);
-        addCriteriaButton.setDisable(true);
-        readCriteriaButton.setDisable(true);
-        vboxMenu.setVgrow(addCriteriaButton, Priority.ALWAYS);
-        vboxMenu.setVgrow(readCriteriaButton, Priority.ALWAYS);
-        addCriteriaButton.setManaged(false);
-        readCriteriaButton.setManaged(false);
+        ImageView.setImage(img);
+        MFXButtonTop.setVisible(false);
+        MFXButtonDown.setVisible(false);
+        MFXButtonTop.setDisable(true);
+        MFXButtonDown.setDisable(true);
+        vboxMenu.setVgrow(MFXButtonTop, Priority.ALWAYS);
+        vboxMenu.setVgrow(MFXButtonDown, Priority.ALWAYS);
+        MFXButtonTop.setManaged(false);
+        MFXButtonDown.setManaged(false);
         vboxMenu.layout();
+    }
+
+    private void showCriteriaMenu() {
+        showMenu(viewCriteriaButton, addCriteriaButton, imgCollapse);
+    }
+
+    private void showAlternativeMenu() {
+        showMenu(viewAlternativeButton, addAlternativeButton, imgCollapse2);
+    }
+
+    private void showTopsisMenu() {
+        showMenu(calcTopsisButton, viewTopsisButton, imgCollapse3);
+    }
+
+    private void hideCriteriaMenu() {
+        hideMenu(viewCriteriaButton, addCriteriaButton, imgCollapse);
+    }
+
+    private void hideAlternativeMenu() {
+        hideMenu(viewAlternativeButton, addAlternativeButton, imgCollapse2);
+    }
+
+    private void hideTopsisMenu() {
+        hideMenu(calcTopsisButton, viewTopsisButton, imgCollapse3);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         hideCriteriaMenu();
+        hideAlternativeMenu();
+        hideTopsisMenu();
     }
 }

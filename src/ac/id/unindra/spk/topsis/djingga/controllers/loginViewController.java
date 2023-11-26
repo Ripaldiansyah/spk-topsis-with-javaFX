@@ -1,13 +1,10 @@
 package ac.id.unindra.spk.topsis.djingga.controllers;
 
 import ac.id.unindra.spk.topsis.djingga.models.OTPModel;
-import ac.id.unindra.spk.topsis.djingga.models.forgotPasswordModel;
-import ac.id.unindra.spk.topsis.djingga.models.loginModel;
-import ac.id.unindra.spk.topsis.djingga.models.registerModel;
+import ac.id.unindra.spk.topsis.djingga.models.ForgotPasswordModel;
+import ac.id.unindra.spk.topsis.djingga.models.LoginModel;
+import ac.id.unindra.spk.topsis.djingga.models.RegisterModel;
 import ac.id.unindra.spk.topsis.djingga.services.OTPService;
-import ac.id.unindra.spk.topsis.djingga.services.forgotPasswordService;
-import ac.id.unindra.spk.topsis.djingga.services.loginService;
-import ac.id.unindra.spk.topsis.djingga.services.registerService;
 import ac.id.unindra.spk.topsis.djingga.utilities.CurrentDate;
 import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
 import ac.id.unindra.spk.topsis.djingga.utilities.RandomTextGenerator;
@@ -39,8 +36,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ac.id.unindra.spk.topsis.djingga.services.ForgotPasswordService;
+import ac.id.unindra.spk.topsis.djingga.services.LoginService;
+import ac.id.unindra.spk.topsis.djingga.services.RegisterService;
 
-public class loginViewController implements Initializable {
+public class LoginViewController implements Initializable {
 
     @FXML
     private ImageView imgLogo;
@@ -125,14 +125,14 @@ public class loginViewController implements Initializable {
     private int countdownSeconds = 90;
     private double xOffset, yOffset = 0;
 
-    registerModel registerModel = new registerModel();
+    RegisterModel registerModel = new RegisterModel();
     OTPService OTPService = new OTPController();
-    loginService loginService = new loginController();
-    loginModel loginModel = new loginModel();
+    LoginService loginService = new LoginController();
+    LoginModel loginModel = new LoginModel();
     OTPModel OTPModel = new OTPModel();
     Timer timer = new Timer();
-    forgotPasswordModel forgotPasswordModel = new forgotPasswordModel();
-    forgotPasswordService forgotPasswordService = new forgotPasswordController();
+    ForgotPasswordModel forgotPasswordModel = new ForgotPasswordModel();
+    ForgotPasswordService forgotPasswordService = new ForgotPasswordController();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -144,16 +144,16 @@ public class loginViewController implements Initializable {
     }
 
     public void clear() {
-        txtPassword.setText("");
-        txtUsername.setText("");
-        registUsername.setText("");
-        registFullname.setText("");
-        registPassword.setText("");
-        registPasswordValidation.setText("");
-        otpEntered.setText("");
-        registEmail.setText("");
-        searchUsername.setText("");
-        searchEmail.setText("");
+        txtPassword.clear();
+        txtUsername.clear();
+        registUsername.clear();
+        registFullname.clear();
+        registPassword.clear();
+        registPasswordValidation.clear();
+        otpEntered.clear();
+        registEmail.clear();
+        searchUsername.clear();
+        searchEmail.clear();
     }
 
     private boolean loginValidation() {
@@ -241,7 +241,7 @@ public class loginViewController implements Initializable {
                 mainApp();
                 ((Node) event.getSource()).getScene().getWindow().hide();
                 NotificationManager.notification("Berhasil Masuk", "Selamat Datang " + loginModel.getFullName());
-                appViewController.idUser = loginModel.getIdUser();
+                AppViewController.idUser = loginModel.getIdUser();
             }
 
         } else {
@@ -354,7 +354,7 @@ public class loginViewController implements Initializable {
                 String idOTP = RandomTextGenerator.generateRandomText(4) + CurrentDate.date("");
                 String idUser = CurrentDate.date("") + RandomTextGenerator.generateRandomText(4);
 
-                registerService registerService = new registerController();
+                RegisterService registerService = new RegisterController();
 
                 registerModel.setIdUser(idUser);
                 registerModel.setFullName(fullName);
@@ -491,7 +491,7 @@ public class loginViewController implements Initializable {
 
     public void mainApp() throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/appView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/AppView.fxml"));
         Scene scene = new Scene(root);
 
         root.setOnMousePressed(event -> {

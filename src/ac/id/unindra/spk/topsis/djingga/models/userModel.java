@@ -1,7 +1,7 @@
 package ac.id.unindra.spk.topsis.djingga.models;
 
 
-public class userModel {
+public class UserModel {
     int totalAccout, totalAdmin, totalUser, totalActive, totalPending, totalPaginate, activePaginate;
     String id,fullName,username,role,accountStatus;
 

@@ -3,10 +3,10 @@ package ac.id.unindra.spk.topsis.djingga.models;
 import javafx.beans.property.SimpleStringProperty;
 
 
-public class userTableModel {
+public class UserTableModel {
     private SimpleStringProperty id,fullName,username,role,accountStatus;
 
-    public userTableModel(String id, String fullName, String username, String role, String accountStatus ) {
+    public UserTableModel(String id, String fullName, String username, String role, String accountStatus ) {
         this.id = new SimpleStringProperty(id);
         this.fullName =  new SimpleStringProperty(fullName);
         this.username =  new SimpleStringProperty(username);
