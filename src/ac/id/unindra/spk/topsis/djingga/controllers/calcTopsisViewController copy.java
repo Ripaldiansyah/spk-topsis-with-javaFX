@@ -332,62 +332,44 @@ public class calcTopsisViewController implements Initializable {
     }
 
     private void processTopsis() {
-
-        String idCategory = CurrentDate.date("") + RandomTextGenerator.generateRandomText(4);
-        int size;
-       
-            size = ratingFieldDataCalc.size() + ratingFieldStarCalc.size();
-      
-            
-     
-        for (int i = 0; i < size; i += count) {
-            int endIndex = Math.min(i + count, size);
-
-            if (ratingFieldDataCalc.size() != 0) {
-                group = ratingFieldDataCalc.subList(i, endIndex);
-            }if (ratingFieldStarCalc.size() != 0) {
-                groupStar = ratingFieldStarCalc.subList(i, endIndex);
-            }
-
+ for (int i = 0; i < ratingFieldDataCalc.size(); i += count) {
+            int endIndex = Math.min(i + count, ratingFieldDataCalc.size());
+            List<String> group = ratingFieldDataCalc.subList(i, endIndex);
             double sqrtTotal = 0;
             double division = 0;
-            double valueMatrixNormalize = 0;
-            // pembagi\
-           if (groupStar.size() != 0) {
-                for (double subDouble : groupStar) {
-                    sqrtTotal += Math.pow(subDouble, 2);
-                }
-            } else if (group.size() != 0) {
-                for (String subString : group) {
-                    for (int x = 0; x < subString.length(); x++) {
-                        int digit;
-                        digit = Character.getNumericValue(subString.charAt(x));
-                        sqrtTotal += Math.pow(digit, 2);
-                    }
+            double valueMatrixTernormalisasi = 0;
+            // pembagi
+            for (String subString : group) {
+                for (int x = 0; x < subString.length(); x++) {
+                    int digit;
+                    digit = Character.getNumericValue(subString.charAt(x));
+                    sqrtTotal += Math.pow(digit, 2);
                 }
             }
-
             // MATRIX KEPUTUSAN TERNORMALISASI
             division = Math.sqrt(sqrtTotal);
-
             System.out.println(division);
             for (String subString : group) {
                 for (int x = 0; x < subString.length(); x++) {
                     double digit;
                     digit = Character.getNumericValue(subString.charAt(x));
-                    valueMatrixNormalize = digit / division;
-                    topsisModel.setMatrixNormalize(valueMatrixNormalize);
-                    topsisModel.setIdCategory(idCategory);
-
+                    valueMatrixTernormalisasi = digit / division;
+                    
                 }
+               
+
             }
-            
+
+
+
+        }
+         for(int z=0;z<selectedCriteriaList.size();z++){
+                        System.out.println(selectedCriteriaList.get(z));
+                    
+       
         }
         
-        // for(int z=0;z<selectedCriteriaList.size();z++){
-        // System.out.println(selectedCriteriaList.get(z));
-        // }
-
+        
     }
 
 }

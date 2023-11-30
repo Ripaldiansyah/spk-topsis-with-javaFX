@@ -6,5 +6,6 @@ public interface TopsisService {
     String[] getData();
     String[] getDataByCategory(TopsisModel topsisModel);
     void getTypeCriteria(TopsisModel topsisModel);
+    void setTopsisNormalizedDecisionmatrix(TopsisModel topsisModel);
     
 } 

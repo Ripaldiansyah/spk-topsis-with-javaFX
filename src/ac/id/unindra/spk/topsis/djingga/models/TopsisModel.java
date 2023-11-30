@@ -1,8 +1,10 @@
 package ac.id.unindra.spk.topsis.djingga.models;
 
 public class TopsisModel {
-    String category, nameCriteria, idCriteria, typeCriteria;
+    String category, nameCriteria, idCriteria, typeCriteria, idCategory;
+    double matrixNormalize;
 
+    
     
     public String getCategory() {
         return category;
@@ -28,6 +30,19 @@ public class TopsisModel {
     public void setTypeCriteria(String typeCriteria) {
         this.typeCriteria = typeCriteria;
     }
+    public double getMatrixNormalize() {
+        return matrixNormalize;
+    }
+    public void setMatrixNormalize(double matrixNormalize) {
+        this.matrixNormalize = matrixNormalize;
+    }
+    public String getIdCategory() {
+        return idCategory;
+    }
+    public void setIdCategory(String idCategory) {
+        this.idCategory = idCategory;
+    }
+   
     
     
    

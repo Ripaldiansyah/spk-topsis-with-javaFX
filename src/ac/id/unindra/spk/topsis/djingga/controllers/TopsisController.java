@@ -127,4 +127,10 @@ public class TopsisController implements TopsisService {
             }
         }
     }
+
+    @Override
+    public void setTopsisNormalizedDecisionmatrix(TopsisModel topsisModel) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setTopsisNormalizedDecisionmatrix'");
+    }
     }
