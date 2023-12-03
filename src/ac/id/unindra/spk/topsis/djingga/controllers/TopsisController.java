@@ -317,7 +317,30 @@ public class TopsisController implements TopsisService {
 
     @Override
     public void setRank(TopsisModel topsisModel) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setRank'");
+        PreparedStatement stat = null;
+        String sql = "UPDATE topsis_nilai_ideal SET `rank`=? WHERE idMatrixKeputusanTernormalisasi=? AND idAlatFotografer=?";
+
+        try {
+            stat = conn.prepareStatement(sql);
+
+            stat.setInt(1, topsisModel.getRank());
+            stat.setString(2, topsisModel.getIdNormalizedDecisionMatrix());
+            stat.setString(3, topsisModel.getIdAlternative());
+
+            stat.executeUpdate();
+
+        } catch (
+
+        Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
     }
 }

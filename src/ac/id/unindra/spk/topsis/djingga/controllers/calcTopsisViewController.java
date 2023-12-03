@@ -540,9 +540,9 @@ public class CalcTopsisViewController implements Initializable {
             double value = preferenceList.get(x);
             int rank = topsisRank.get(value);
             x++;
-            
-            topsisModel
-            
+
+            topsisModel.setRank(rank);
+            topsisService.setRank(topsisModel);
         }
     }
 
