@@ -15,7 +15,6 @@ public class LoginController implements LoginService {
     private Connection conn = new DatabaseConnection().getConnection();
     private NotificationManager notificationManager = new NotificationManager();
     OTPService OTPService = new OTPController();
-      
 
     @Override
     public void processLogin(LoginModel loginModel) {
@@ -40,13 +39,13 @@ public class LoginController implements LoginService {
                     loginModel.setIdOTP(rs.getString("idOTP"));
                     loginModel.setEmail(rs.getString("email"));
                     if (loginModel.getStatus().equalsIgnoreCase("pending")) {
-                       
+
                         OTPService.resendOTP(loginModel);
                         LoginViewController loginViewController = new LoginViewController();
                         loginViewController.runPane = true;
                         loginViewController.idUser = loginModel.getIdUser();
                     } else {
-                                  LoginViewController.main = true;
+                        LoginViewController.main = true;
                     }
                 } else {
                     notificationManager.notification("Peringatan", "Periksa Kembali password Anda");
@@ -55,13 +54,13 @@ public class LoginController implements LoginService {
 
             } else {
                 notificationManager.notification("Tidak Dapat Masuk", "Nama Pengguna Tidak terdaftar");
-                LoginViewController.runPane=false;
+                LoginViewController.runPane = false;
                 stat.close();
             }
 
         } catch (Exception e) {
             System.err.println(e);
-        }finally {
+        } finally {
             if (stat != null) {
                 try {
                     stat.close();

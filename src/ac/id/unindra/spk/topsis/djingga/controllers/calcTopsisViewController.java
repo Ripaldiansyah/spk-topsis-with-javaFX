@@ -2,6 +2,7 @@ package ac.id.unindra.spk.topsis.djingga.controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 
-public class calcTopsisViewController implements Initializable {
+public class CalcTopsisViewController implements Initializable {
     @FXML
     private MFXComboBox<String> alternativeCategory;
 
@@ -99,13 +100,14 @@ public class calcTopsisViewController implements Initializable {
     List<String> selectedCriteriaList = new ArrayList<>();
     List<MFXTextField> ratingFieldData = new ArrayList<>();
     List<Rating> ratingFieldStar = new ArrayList<>();
-    List<String> ratingFieldDataCalc = new ArrayList<>();
-    List<Double> ratingFieldStarCalc = new ArrayList<>();
-    List<String> ratingStardData = new ArrayList<>();
+    List<Double> ratingFieldDataCalc = new ArrayList<>();
+    List<String> ratingStarData = new ArrayList<>();
     List<Double> groupStar = new ArrayList<>();
-    List<String> group = new ArrayList<>();
+    List<String> listCriteriaHeader = new ArrayList<>();
     int count, countHeader;
+    private int categoryIndexSelected = 0;
     boolean isNotEmpty = false;
+    String[] dataAlternative;
     private Map<MFXTextField, List> textFieldToVBoxMap = new HashMap<>();
     private Map<Rating, VBox> ratingToVBoxMap = new HashMap<>();
 
@@ -206,7 +208,7 @@ public class calcTopsisViewController implements Initializable {
     }
 
     private void loadDataByCategory() {
-        String[] dataAlternative = topsisService.getDataByCategory(topsisModel);
+        dataAlternative = topsisService.getDataByCategory(topsisModel);
         alternativeVbox.getChildren().clear();
         for (String item : dataAlternative) {
             alternativeText = new Text(item);
@@ -256,8 +258,8 @@ public class calcTopsisViewController implements Initializable {
                 // ratingToVBoxMap.put(ratingStar, criteriaVbox);
                 ratingFieldStar.add(ratingStar);
                 criteriaVbox.getChildren().add(ratingStar);
-
             }
+            listCriteriaHeader.add("Benefit");
         } else {
             for (int i = 0; i < count; i++) {
                 ratingField = new MFXTextField();
@@ -273,6 +275,7 @@ public class calcTopsisViewController implements Initializable {
                 ratingFieldData.add(ratingField);
                 criteriaVbox.getChildren().add(ratingField);
             }
+            listCriteriaHeader.add("Cost");
         }
 
     }
@@ -292,10 +295,57 @@ public class calcTopsisViewController implements Initializable {
     private void calcTopsisField() {
         int i = 0;
 
-        if (ratingFieldData.size() != 0) {
+        int iterationStar = 0;
+        int iterationField = 0;
+        int tempIterationStar = 0 + count;
+        int tempIterationField = 0 + count;
+        categoryIndexSelected = 0;
+
+        if (ratingFieldData.size() != 0 && ratingFieldStar.size() != 0) {
+            int passInt = 0;
+
+            for (String criteriaType : listCriteriaHeader) {
+                if (criteriaType.equalsIgnoreCase("Benefit")) {
+                    for (int x = 0; x < ratingFieldStar.size(); x++) {
+                        ratingFieldDataCalc.add(ratingFieldStar.get(iterationStar).getRating());
+                        iterationStar++;
+                        if (iterationStar == tempIterationStar) {
+
+                            tempIterationStar += count;
+                            passInt++;
+                            break;
+
+                        }
+
+                    }
+                } else {
+                    if (checkValidationField()) {
+                        for (int x = 0; x < ratingFieldData.size(); x++) {
+                            ratingFieldDataCalc.add(Double.parseDouble(ratingFieldData.get(iterationField).getText()));
+                            iterationField++;
+                            if (iterationField == tempIterationField) {
+                                tempIterationField += count;
+                                passInt++;
+                                break;
+                            }
+
+                        }
+                    } else {
+                        ratingFieldDataCalc.removeAll(ratingFieldDataCalc);
+                        break;
+                    }
+                }
+                if (passInt == listCriteriaHeader.size()) {
+                    isNotEmpty = true;
+                }
+            }
+
+        } else if (ratingFieldData.size() != 0) {
             for (MFXTextField textField : ratingFieldData) {
+
                 int size = ratingFieldData.size();
                 String textValue = textField.getText();
+
                 if (textField.getText().trim().isEmpty()) {
                     NotificationManager.notification("Nilai Cost Belum Terisi",
                             "Pastikan Nilai Cost telah terisi semua");
@@ -303,25 +353,20 @@ public class calcTopsisViewController implements Initializable {
                     ratingFieldDataCalc.removeAll(ratingFieldDataCalc);
                     break;
                 } else {
-                    ratingFieldDataCalc.add(textValue);
+                    ratingFieldDataCalc.add(Double.parseDouble(textValue));
+
                     i++;
                 }
 
                 if (i == size) {
-                    for (Rating starRating : ratingFieldStar) {
-                        double ratingValue = starRating.getRating();
-                        ratingFieldStarCalc.add(ratingValue);
-                    }
                     isNotEmpty = true;
                 }
             }
-        } else {
+        } else if (ratingFieldStar.size() != 0) {
             for (Rating starRating : ratingFieldStar) {
-                double ratingValue = starRating.getRating();
-                ratingFieldStarCalc.add(ratingValue);
+                ratingFieldDataCalc.add(starRating.getRating());
             }
             isNotEmpty = true;
-            System.out.println("ya");
         }
 
         if (isNotEmpty) {
@@ -331,63 +376,125 @@ public class calcTopsisViewController implements Initializable {
 
     }
 
-    private void processTopsis() {
+    private boolean checkValidationField() {
+        int i = 0;
+        boolean valid = false;
+        for (MFXTextField textField : ratingFieldData) {
 
-        String idCategory = CurrentDate.date("") + RandomTextGenerator.generateRandomText(4);
-        int size;
-       
-            size = ratingFieldDataCalc.size() + ratingFieldStarCalc.size();
-      
-            
-     
-        for (int i = 0; i < size; i += count) {
-            int endIndex = Math.min(i + count, size);
+            int size = ratingFieldData.size();
 
-            if (ratingFieldDataCalc.size() != 0) {
-                group = ratingFieldDataCalc.subList(i, endIndex);
-            }if (ratingFieldStarCalc.size() != 0) {
-                groupStar = ratingFieldStarCalc.subList(i, endIndex);
+            if (textField.getText().trim().isEmpty()) {
+                NotificationManager.notification("Nilai Cost Belum Terisi",
+                        "Pastikan Nilai Cost telah terisi semua");
+                isNotEmpty = false;
+                valid = false;
+                break;
+
+            } else {
+                i++;
             }
 
-            double sqrtTotal = 0;
-            double division = 0;
-            double valueMatrixNormalize = 0;
-            // pembagi\
-           if (groupStar.size() != 0) {
-                for (double subDouble : groupStar) {
-                    sqrtTotal += Math.pow(subDouble, 2);
-                }
-            } else if (group.size() != 0) {
-                for (String subString : group) {
-                    for (int x = 0; x < subString.length(); x++) {
-                        int digit;
-                        digit = Character.getNumericValue(subString.charAt(x));
-                        sqrtTotal += Math.pow(digit, 2);
-                    }
-                }
+            if (i == size) {
+                return valid = true;
             }
 
-            // MATRIX KEPUTUSAN TERNORMALISASI
-            division = Math.sqrt(sqrtTotal);
-
-            System.out.println(division);
-            for (String subString : group) {
-                for (int x = 0; x < subString.length(); x++) {
-                    double digit;
-                    digit = Character.getNumericValue(subString.charAt(x));
-                    valueMatrixNormalize = digit / division;
-                    topsisModel.setMatrixNormalize(valueMatrixNormalize);
-                    topsisModel.setIdCategory(idCategory);
-
-                }
-            }
-            
         }
-        
-        // for(int z=0;z<selectedCriteriaList.size();z++){
-        // System.out.println(selectedCriteriaList.get(z));
-        // }
-
+        return valid;
     }
 
+    private void processTopsis() {
+        String idNormalizedDecisionMatrix = CurrentDate.date("") + "GRADE" + RandomTextGenerator.generateRandomText(3);
+        int setCriteriaIndex = 0;
+        int size = ratingFieldDataCalc.size();
+
+        for (int i = 0; i < size; i += count) {
+            int endIndexField = Math.min(i + count, ratingFieldDataCalc.size());
+
+            double sqrtTotalStar = 0;
+            double divisionStar = 0;
+            double valueMatrixNormalize = 0;
+            double valueNormalizedAndWeighted = 0;
+            int categoryIndex = 0;
+
+            if (i <= ratingFieldDataCalc.size()) {
+                groupStar = ratingFieldDataCalc.subList(i, endIndexField);
+                System.out.println(groupStar);
+                for (double valueDouble : groupStar) {
+
+                    sqrtTotalStar += Math.pow(valueDouble, 2);
+                    categoryIndex++;
+
+                    if (categoryIndex == groupStar.size()) {
+                        divisionStar = Math.sqrt(sqrtTotalStar);
+                        int indexGroup = 0;
+                        List<Double> temptList = new ArrayList<>();
+                        for (String alternative : dataAlternative) {// 3x iterasi untuk saat ini, sesuai data alternatif
+                            double max = 0;
+                            double min = 0;
+                            topsisModel.setNameAlternative(alternative);
+                            topsisService.getIdAlternative(topsisModel);
+
+                            String criteriaName = selectedCriteriaList.get(setCriteriaIndex);
+                            topsisModel.setNameCriteria(criteriaName);
+                            topsisService.getTypeCriteria(topsisModel);
+
+                            valueMatrixNormalize = groupStar.get(indexGroup) / divisionStar;
+                            topsisModel.setWeightAlternative(groupStar.get(indexGroup));
+                            indexGroup++;
+
+                            topsisModel.setMatrixNormalize(valueMatrixNormalize);
+
+                            valueNormalizedAndWeighted = valueMatrixNormalize * topsisModel.getWeightCriteria();
+                            topsisModel.setMatrixNormalizedAndWeighted(valueNormalizedAndWeighted);
+                            topsisModel.setIdNormalizedDecisionMatrix(idNormalizedDecisionMatrix);
+                            temptList.add(valueNormalizedAndWeighted);
+
+                            if (indexGroup == dataAlternative.length) {
+                                if (listCriteriaHeader.get(setCriteriaIndex).equalsIgnoreCase("Benefit")) {
+                                    max = Collections.max(temptList);
+                                    min = Collections.min(temptList);
+                                } else {
+                                    max = Collections.min(temptList);
+                                    min = Collections.max(temptList);
+                                }
+                                topsisModel.setMax(max);
+                                topsisModel.setMin(min);
+                                topsisService.setMaxMinTopsis(topsisModel);
+                            }
+
+                            // System.out.println("nama " + topsisModel.getNameCriteria() + " nilai matriks
+                            // "
+                            // + valueMatrixNormalize + " Nilai Normalisasi terbobot " +
+                            // valueNormalizedAndWeighted
+                            // + " nama alternative "
+                            // + topsisModel.getNameAlternative() + " id " +
+                            // topsisModel.getIdAlternative());
+                            // DI+
+                            topsisService.setTopsisNormalizedDecisionmatrixAndWeighted(topsisModel);
+
+                        }
+
+                    }
+
+                }
+
+            }
+            setCriteriaIndex++;
+        }
+        topsisIdeal(idNormalizedDecisionMatrix);
+    }
+
+    private void topsisIdeal(String idNormalizedDecisionMatrix) {
+        List<Double> valueAlternative = new ArrayList<>();
+        for (String alternative : dataAlternative) {
+            topsisModel.setNameAlternative(alternative);
+            topsisService.getIdAlternative(topsisModel);
+            valueAlternative.addAll(
+                    topsisService.normalizeAndWeight(idNormalizedDecisionMatrix, topsisModel.getIdAlternative()));
+            System.out.println(valueAlternative);
+        }
+
+    }
 }
+
+// MATRIX KEPUTUSAN TERNORMALISASI

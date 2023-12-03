@@ -184,7 +184,7 @@ public class AppViewController implements Initializable {
     private void calcTopsis(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/calcTopsisView.fxml"));
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/CalcTopsisView.fxml"));
             Parent newContent = loader.load();
             pane.getChildren().setAll(newContent);
         } catch (Exception e) {
