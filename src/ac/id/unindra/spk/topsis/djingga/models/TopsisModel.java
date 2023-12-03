@@ -2,14 +2,49 @@ package ac.id.unindra.spk.topsis.djingga.models;
 
 public class TopsisModel {
     String category, nameCriteria, idCriteria, typeCriteria, idNormalizedDecisionMatrix, nameAlternative, idAlternative;
-    double weightAlternative, matrixNormalize, weightCriteria, matrixNormalizedAndWeighted, max, min;
+    double weightAlternative, matrixNormalize, weightCriteria, matrixNormalizedAndWeighted, max, min,
+            positiveIdealValue, negativeIdealValue, preference;
+
+    int rank;
 
     public String getCategory() {
         return category;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public double getPreference() {
+        return preference;
+    }
+
+    public void setPreference(double preference) {
+        this.preference = preference;
+    }
+
     public double getMax() {
         return max;
+    }
+
+    public double getPositiveIdealValue() {
+        return positiveIdealValue;
+    }
+
+    public void setPositiveIdealValue(double positiveIdealValue) {
+        this.positiveIdealValue = positiveIdealValue;
+    }
+
+    public double getNegativeIdealValue() {
+        return negativeIdealValue;
+    }
+
+    public void setNegativeIdealValue(double negativeIdealValue) {
+        this.negativeIdealValue = negativeIdealValue;
     }
 
     public void setMax(double max) {

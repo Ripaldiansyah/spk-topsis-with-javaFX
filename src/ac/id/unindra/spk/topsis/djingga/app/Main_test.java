@@ -1,37 +1,34 @@
 package ac.id.unindra.spk.topsis.djingga.app;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main_test {
     public static void main(String[] args) {
-        // Contoh data
-        String data = "422421"; // Data berupa substring
+        // Contoh List<Double>
+        List<Double> nilaiList = new ArrayList<>();
+        nilaiList.add(85.5);
+        nilaiList.add(92.0);
+        nilaiList.add(78.3);
+        nilaiList.add(95.8);
+        nilaiList.add(88.2);
 
-        // Ukuran setiap bagian (misalnya, 3)
-        int blockSize = 3;
+        // Membuat salinan List untuk diurutkan
+        List<Double> sortedList = new ArrayList<>(nilaiList);
+        Collections.sort(sortedList, Collections.reverseOrder()); // Mengurutkan secara descending
 
-        // Hitung jumlah elemen yang akan dihasilkan
-        int numElements = data.length() / blockSize;
-
-        // Hitung akar kuadrat untuk setiap elemen dalam substring
-        for (int i = 0; i < numElements; i++) {
-            // Ambil substring sesuai dengan indeks i dan blockSize
-            String substring = data.substring(i * blockSize, (i + 1) * blockSize);
-        
-            // Hitung akar kuadrat dari setiap elemen dalam substring
-            double totalAkarKuadrat = 0;
-            for (char digitChar : substring.toCharArray()) {
-                int digit = Character.getNumericValue(digitChar);
-                totalAkarKuadrat += Math.pow(digit, 2);
-            }
-
-            // Hitung akar kuadrat dari total
-            double akarKuadratTotal = Math.sqrt(totalAkarKuadrat);
-
-            // Tampilkan hasil
-            System.out.println( akarKuadratTotal);
+        // Membuat Map untuk menyimpan peringkat
+        Map<Double, Integer> peringkatMap = new HashMap<>();
+        for (int i = 0; i < sortedList.size(); i++) {
+            System.out.println(sortedList.get(i));
+            peringkatMap.put(sortedList.get(i), i + 1);
         }
+
+        // Menampilkan hasil perangkingan
+        System.out.println("Nilai awal: " + nilaiList);
+        System.out.println("Perangkingan: " + peringkatMap);
     }
 }
-

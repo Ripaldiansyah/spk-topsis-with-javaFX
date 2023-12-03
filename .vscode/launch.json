@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main_test",
+            "request": "launch",
+            "mainClass": "ac.id.unindra.spk.topsis.djingga.app.Main_test",
+            "projectName": "spk-topsis-with-javaFX_162a533b"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "ac.id.unindra.spk.topsis.djingga.app.Main",

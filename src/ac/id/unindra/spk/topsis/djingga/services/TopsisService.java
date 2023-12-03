@@ -15,8 +15,14 @@ public interface TopsisService {
 
     void setMaxMinTopsis(TopsisModel topsisModel);
 
+    void setTopsisIdeal(TopsisModel topsisModel);
+
     void getIdAlternative(TopsisModel topsisModel);
 
+    void setRank(TopsisModel topsisModel);
+
     List<Double> normalizeAndWeight(String idNormalizedDecisionMatrix, String idAlternative);
+
+    List<Double> getMaxMin(String idNormalizedDecisionMatrix, String idCriteria);
 
 }

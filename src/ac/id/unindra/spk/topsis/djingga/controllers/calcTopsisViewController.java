@@ -26,7 +26,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.TextFormatter;
+
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -36,7 +36,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.converter.IntegerStringConverter;
 
 public class CalcTopsisViewController implements Initializable {
     @FXML
@@ -104,8 +103,8 @@ public class CalcTopsisViewController implements Initializable {
     List<String> ratingStarData = new ArrayList<>();
     List<Double> groupStar = new ArrayList<>();
     List<String> listCriteriaHeader = new ArrayList<>();
+    List<Double> preferenceList = new ArrayList<>();
     int count, countHeader;
-    private int categoryIndexSelected = 0;
     boolean isNotEmpty = false;
     String[] dataAlternative;
     private Map<MFXTextField, List> textFieldToVBoxMap = new HashMap<>();
@@ -139,7 +138,7 @@ public class CalcTopsisViewController implements Initializable {
     @FXML
     private void nextPane() {
         if (alternatifCategoryValidation()) {
-            activeAchorPane(selectCriteria);
+            activeAnchorPane(selectCriteria);
             topsisModel.setCategory(alternativeCategory.getText());
         }
     }
@@ -153,7 +152,7 @@ public class CalcTopsisViewController implements Initializable {
         return true;
     }
 
-    private void activeAchorPane(AnchorPane anchorPane) {
+    private void activeAnchorPane(AnchorPane anchorPane) {
         selectCategory.setDisable(true);
         selectCriteria.setDisable(true);
         calcTopsisScene.setDisable(true);
@@ -194,7 +193,7 @@ public class CalcTopsisViewController implements Initializable {
                 ratingFieldData.clear();
                 ratingFieldStar.clear();
                 loadDataByCategory();
-                activeAchorPane(calcTopsisScene);
+                activeAnchorPane(calcTopsisScene);
                 loadDataCriteria();
 
             } else {
@@ -282,12 +281,12 @@ public class CalcTopsisViewController implements Initializable {
 
     @FXML
     private void backToSelectingCategory(MouseEvent event) {
-        activeAchorPane(selectCategory);
+        activeAnchorPane(selectCategory);
     }
 
     @FXML
     private void backToSelectingCriteria(MouseEvent event) {
-        activeAchorPane(selectCriteria);
+        activeAnchorPane(selectCriteria);
         count = 0;
     }
 
@@ -299,7 +298,6 @@ public class CalcTopsisViewController implements Initializable {
         int iterationField = 0;
         int tempIterationStar = 0 + count;
         int tempIterationField = 0 + count;
-        categoryIndexSelected = 0;
 
         if (ratingFieldData.size() != 0 && ratingFieldStar.size() != 0) {
             int passInt = 0;
@@ -418,7 +416,7 @@ public class CalcTopsisViewController implements Initializable {
 
             if (i <= ratingFieldDataCalc.size()) {
                 groupStar = ratingFieldDataCalc.subList(i, endIndexField);
-                System.out.println(groupStar);
+                // System.out.println(groupStar);
                 for (double valueDouble : groupStar) {
 
                     sqrtTotalStar += Math.pow(valueDouble, 2);
@@ -462,14 +460,6 @@ public class CalcTopsisViewController implements Initializable {
                                 topsisService.setMaxMinTopsis(topsisModel);
                             }
 
-                            // System.out.println("nama " + topsisModel.getNameCriteria() + " nilai matriks
-                            // "
-                            // + valueMatrixNormalize + " Nilai Normalisasi terbobot " +
-                            // valueNormalizedAndWeighted
-                            // + " nama alternative "
-                            // + topsisModel.getNameAlternative() + " id " +
-                            // topsisModel.getIdAlternative());
-                            // DI+
                             topsisService.setTopsisNormalizedDecisionmatrixAndWeighted(topsisModel);
 
                         }
@@ -485,16 +475,75 @@ public class CalcTopsisViewController implements Initializable {
     }
 
     private void topsisIdeal(String idNormalizedDecisionMatrix) {
+
+        int index = 0;
         List<Double> valueAlternative = new ArrayList<>();
+        List<Double> valueMaxMin = new ArrayList<>();
+
         for (String alternative : dataAlternative) {
             topsisModel.setNameAlternative(alternative);
             topsisService.getIdAlternative(topsisModel);
+
             valueAlternative.addAll(
                     topsisService.normalizeAndWeight(idNormalizedDecisionMatrix, topsisModel.getIdAlternative()));
-            System.out.println(valueAlternative);
+        }
+        for (int i = 0; i < count; i++) {
+            double idealPositive = 0;
+            double idealNegative = 0;
+
+            topsisModel.setNameAlternative(dataAlternative[i]);
+            topsisService.getIdAlternative(topsisModel);
+
+            for (String criteria : selectedCriteriaList) {
+
+                topsisModel.setNameCriteria(criteria);
+                topsisService.getTypeCriteria(topsisModel);
+                valueMaxMin = topsisService.getMaxMin(idNormalizedDecisionMatrix, topsisModel.getIdCriteria());
+
+                double valueMax = valueMaxMin.get(0) - valueAlternative.get(index);
+                double valueMin = valueMaxMin.get(1) - valueAlternative.get(index);
+
+                idealPositive += Math.pow(valueMax, 2);
+                idealNegative += Math.pow(valueMin, 2);
+                index++;
+
+            }
+            double sqrtIdealPositive = Math.sqrt(idealPositive);
+            double sqrtIdealNegative = Math.sqrt(idealNegative);
+
+            double preference = sqrtIdealNegative / (sqrtIdealNegative + sqrtIdealPositive);
+            preferenceList.add(preference);
+
+            topsisModel.setPreference(preference);
+            topsisModel.setPositiveIdealValue(sqrtIdealPositive);
+            topsisModel.setNegativeIdealValue(sqrtIdealNegative);
+            topsisService.setTopsisIdeal(topsisModel);
         }
 
+        topsisRanking();
     }
-}
 
-// MATRIX KEPUTUSAN TERNORMALISASI
+    private void topsisRanking() {
+        List<Double> sortedList = new ArrayList<>(preferenceList);
+        Collections.sort(sortedList, Collections.reverseOrder());
+        Map<Double, Integer> topsisRank = new HashMap<>();
+        int x = 0;
+
+        for (int i = 0; i < sortedList.size(); i++) {
+            topsisRank.put(sortedList.get(i), i + 1);
+        }
+
+        for (String alternative : dataAlternative) {
+            topsisModel.setNameAlternative(alternative);
+            topsisService.getIdAlternative(topsisModel);
+
+            double value = preferenceList.get(x);
+            int rank = topsisRank.get(value);
+            x++;
+            
+            topsisModel
+            
+        }
+    }
+
+}

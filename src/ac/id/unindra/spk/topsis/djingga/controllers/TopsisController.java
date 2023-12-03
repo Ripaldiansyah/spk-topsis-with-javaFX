@@ -7,13 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ac.id.unindra.spk.topsis.djingga.models.OTPModel;
 import ac.id.unindra.spk.topsis.djingga.models.TopsisModel;
-import ac.id.unindra.spk.topsis.djingga.services.OTPService;
 import ac.id.unindra.spk.topsis.djingga.services.TopsisService;
 import ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection;
 import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
-import ac.id.unindra.spk.topsis.djingga.utilities.OTPGenerator;
 
 public class TopsisController implements TopsisService {
     private Connection conn = new DatabaseConnection().getConnection();
@@ -232,8 +229,6 @@ public class TopsisController implements TopsisService {
             while (rs.next()) {
                 double value = rs.getDouble("nilaiMatrixKeputusanTernomalisasiDanTerbobot");
                 normalizeAndWeightTemp.add(value);
-                // System.out.println(normalizeAndWeightTemp);
-                // System.out.println(value);
             }
 
         } catch (Exception e) {
@@ -248,5 +243,81 @@ public class TopsisController implements TopsisService {
             }
         }
         return normalizeAndWeightTemp;
+    }
+
+    @Override
+    public List<Double> getMaxMin(String idNormalizedDecisionMatrix, String idCriteria) {
+        String sql = "SELECT * FROM topsis_max_min WHERE idMatrixKeputusanTernormalisasi =? AND idbobotKriteria=? ";
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Double> maxTemp = new ArrayList<>();
+        List<Double> minTemp = new ArrayList<>();
+        List<Double> valueTemp = new ArrayList<>();
+        try {
+
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, idNormalizedDecisionMatrix);
+            stat.setString(2, idCriteria);
+            rs = stat.executeQuery();
+
+            if (rs.next()) {
+                double valueMax = rs.getDouble("max");
+                double valueMin = rs.getDouble("min");
+                maxTemp.add(valueMax);
+                minTemp.add(valueMin);
+
+            }
+
+            valueTemp.addAll(maxTemp);
+            valueTemp.addAll(minTemp);
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return valueTemp;
+    }
+
+    @Override
+    public void setTopsisIdeal(TopsisModel topsisModel) {
+        PreparedStatement stat = null;
+        String sql = "INSERT INTO topsis_nilai_ideal(idMatrixKeputusanTernormalisasi, idAlatFotografer, nilai_ideal_positif,nilai_ideal_negatif, preferensi) VALUES (?,?,?,?,?)";
+        try {
+            stat = conn.prepareStatement(sql);
+
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            stat.setString(2, topsisModel.getIdAlternative());
+            stat.setDouble(3, topsisModel.getPositiveIdealValue());
+            stat.setDouble(4, topsisModel.getNegativeIdealValue());
+            stat.setDouble(5, topsisModel.getPreference());
+
+            stat.executeUpdate();
+
+        } catch (
+
+        Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void setRank(TopsisModel topsisModel) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setRank'");
     }
 }
