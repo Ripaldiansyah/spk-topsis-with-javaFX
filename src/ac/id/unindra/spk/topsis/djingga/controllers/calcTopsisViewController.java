@@ -1,6 +1,7 @@
 package ac.id.unindra.spk.topsis.djingga.controllers;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.ResourceBundle;
 import org.controlsfx.control.Rating;
 
 import ac.id.unindra.spk.topsis.djingga.models.TopsisModel;
+
 import ac.id.unindra.spk.topsis.djingga.services.TopsisService;
 import ac.id.unindra.spk.topsis.djingga.utilities.CurrentDate;
 import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
@@ -18,21 +20,27 @@ import ac.id.unindra.spk.topsis.djingga.utilities.RandomTextGenerator;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXCheckbox;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
+
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.enums.FloatMode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-
+import javafx.scene.Parent;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -60,6 +68,8 @@ public class CalcTopsisViewController implements Initializable {
     private AnchorPane selectCategory;
     @FXML
     private AnchorPane calcTopsisScene;
+    @FXML
+    private AnchorPane topsisResult;
 
     @FXML
     private AnchorPane selectCriteria;
@@ -80,6 +90,9 @@ public class CalcTopsisViewController implements Initializable {
 
     @FXML
     private MFXTextField ratingField;
+
+    @FXML
+    private Pane topsisCalcPane;
 
     @FXML
     private Rating ratingStar;
@@ -404,7 +417,8 @@ public class CalcTopsisViewController implements Initializable {
         String idNormalizedDecisionMatrix = CurrentDate.date("") + "GRADE" + RandomTextGenerator.generateRandomText(3);
         int setCriteriaIndex = 0;
         int size = ratingFieldDataCalc.size();
-
+        topsisModel.setIdNormalizedDecisionMatrix(idNormalizedDecisionMatrix);
+        topsisSaveList();
         for (int i = 0; i < size; i += count) {
             int endIndexField = Math.min(i + count, ratingFieldDataCalc.size());
 
@@ -416,7 +430,6 @@ public class CalcTopsisViewController implements Initializable {
 
             if (i <= ratingFieldDataCalc.size()) {
                 groupStar = ratingFieldDataCalc.subList(i, endIndexField);
-                // System.out.println(groupStar);
                 for (double valueDouble : groupStar) {
 
                     sqrtTotalStar += Math.pow(valueDouble, 2);
@@ -429,6 +442,9 @@ public class CalcTopsisViewController implements Initializable {
                         for (String alternative : dataAlternative) {// 3x iterasi untuk saat ini, sesuai data alternatif
                             double max = 0;
                             double min = 0;
+
+                             DecimalFormat decimalFormat = new DecimalFormat("#.###");
+
                             topsisModel.setNameAlternative(alternative);
                             topsisService.getIdAlternative(topsisModel);
 
@@ -437,15 +453,16 @@ public class CalcTopsisViewController implements Initializable {
                             topsisService.getTypeCriteria(topsisModel);
 
                             valueMatrixNormalize = groupStar.get(indexGroup) / divisionStar;
+                            double valueMatrixNormalizeFormat= Double.parseDouble(decimalFormat.format(valueMatrixNormalize));
                             topsisModel.setWeightAlternative(groupStar.get(indexGroup));
                             indexGroup++;
 
-                            topsisModel.setMatrixNormalize(valueMatrixNormalize);
+                            topsisModel.setMatrixNormalize(valueMatrixNormalizeFormat);
 
-                            valueNormalizedAndWeighted = valueMatrixNormalize * topsisModel.getWeightCriteria();
-                            topsisModel.setMatrixNormalizedAndWeighted(valueNormalizedAndWeighted);
-                            topsisModel.setIdNormalizedDecisionMatrix(idNormalizedDecisionMatrix);
-                            temptList.add(valueNormalizedAndWeighted);
+                            valueNormalizedAndWeighted = valueMatrixNormalizeFormat * topsisModel.getWeightCriteria();
+                            topsisModel.setMatrixNormalizedAndWeighted(Double.parseDouble(decimalFormat.format(valueNormalizedAndWeighted)));
+                            
+                            temptList.add(Double.parseDouble(decimalFormat.format(valueNormalizedAndWeighted)));
 
                             if (indexGroup == dataAlternative.length) {
                                 if (listCriteriaHeader.get(setCriteriaIndex).equalsIgnoreCase("Benefit")) {
@@ -510,20 +527,26 @@ public class CalcTopsisViewController implements Initializable {
             }
             double sqrtIdealPositive = Math.sqrt(idealPositive);
             double sqrtIdealNegative = Math.sqrt(idealNegative);
+            DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
-            double preference = sqrtIdealNegative / (sqrtIdealNegative + sqrtIdealPositive);
+            double sqrtIdealPositiveFormated = Double.parseDouble(decimalFormat.format(sqrtIdealPositive));
+            double sqrtIdealNegativeFormated = Double.parseDouble(decimalFormat.format(sqrtIdealNegative));
+
+            double preference = Double.parseDouble(decimalFormat
+                    .format(sqrtIdealNegative / (sqrtIdealNegative + sqrtIdealPositive)));
+
             preferenceList.add(preference);
 
             topsisModel.setPreference(preference);
-            topsisModel.setPositiveIdealValue(sqrtIdealPositive);
-            topsisModel.setNegativeIdealValue(sqrtIdealNegative);
+            topsisModel.setPositiveIdealValue(sqrtIdealPositiveFormated);
+            topsisModel.setNegativeIdealValue(sqrtIdealNegativeFormated);
             topsisService.setTopsisIdeal(topsisModel);
         }
 
-        topsisRanking();
+        topsisRanking(idNormalizedDecisionMatrix);
     }
 
-    private void topsisRanking() {
+    private void topsisRanking(String idNormalizedDecisionMatrix) {
         List<Double> sortedList = new ArrayList<>(preferenceList);
         Collections.sort(sortedList, Collections.reverseOrder());
         Map<Double, Integer> topsisRank = new HashMap<>();
@@ -544,6 +567,33 @@ public class CalcTopsisViewController implements Initializable {
             topsisModel.setRank(rank);
             topsisService.setRank(topsisModel);
         }
+
+        topsisResultProcess(idNormalizedDecisionMatrix);
+        
+    }
+
+    private void topsisResultProcess(String idNormalizedDecisionMatrix) {
+        try {
+            ResultTopsisViewController resultTopsisViewController = new ResultTopsisViewController();
+            resultTopsisViewController.setTopsisModel(topsisModel);
+            resultTopsisViewController.setIdTopsis(idNormalizedDecisionMatrix);
+
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/TopsisResultView.fxml"));
+            loader.setController(resultTopsisViewController); // Hapus baris ini
+
+            Parent newContent = loader.load();
+            topsisCalcPane.getChildren().setAll(newContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void topsisSaveList() {
+        topsisModel.setTotalCriteria(countHeader);
+        topsisModel.setDate(CurrentDate.formatDate());
+        topsisService.setListTopsis(topsisModel);
+
     }
 
 }

@@ -26,7 +26,7 @@ import javafx.scene.text.Text;
 
 public class AlternativeViewController implements Initializable {
     @FXML
-    private Pane alternativiewViewPane;
+    private Pane alternativeViewPane;
 
     @FXML
     private HBox actionHbox;
@@ -108,7 +108,7 @@ public class AlternativeViewController implements Initializable {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/AddAlternativeView.fxml"));
             Parent newContent = loader.load();
-            alternativiewViewPane.getChildren().setAll(newContent);
+            alternativeViewPane.getChildren().setAll(newContent);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,7 +131,7 @@ public class AlternativeViewController implements Initializable {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/AddAlternativeView.fxml"));
             Parent newContent = loader.load();
-            alternativiewViewPane.getChildren().setAll(newContent);
+            alternativeViewPane.getChildren().setAll(newContent);
 
         } catch (Exception e) {
             e.printStackTrace();

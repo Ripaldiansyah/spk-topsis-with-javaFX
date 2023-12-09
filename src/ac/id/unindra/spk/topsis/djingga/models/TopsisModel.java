@@ -1,14 +1,47 @@
 package ac.id.unindra.spk.topsis.djingga.models;
 
 public class TopsisModel {
-    String category, nameCriteria, idCriteria, typeCriteria, idNormalizedDecisionMatrix, nameAlternative, idAlternative;
+    String category, nameCriteria, idCriteria, typeCriteria, idNormalizedDecisionMatrix, nameAlternative, idAlternative, date;
     double weightAlternative, matrixNormalize, weightCriteria, matrixNormalizedAndWeighted, max, min,
             positiveIdealValue, negativeIdealValue, preference;
 
-    int rank;
+    int rank, totalCriteria, totalTopsis,totalPaginate, activePaginate;
+    
 
     public String getCategory() {
         return category;
+    }
+
+    public int getTotalTopsis() {
+        return totalTopsis;
+    }
+
+    public void setTotalTopsis(int totalTopsis) {
+        this.totalTopsis = totalTopsis;
+    }
+
+    public int getTotalPaginate() {
+        return totalPaginate;
+    }
+
+    public void setTotalPaginate(int totalPaginate) {
+        this.totalPaginate = totalPaginate;
+    }
+
+    public int getActivePaginate() {
+        return activePaginate;
+    }
+
+    public void setActivePaginate(int activePaginate) {
+        this.activePaginate = activePaginate;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getRank() {
@@ -17,6 +50,14 @@ public class TopsisModel {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public int getTotalCriteria() {
+        return totalCriteria;
+    }
+
+    public void setTotalCriteria(int totalCriteria) {
+        this.totalCriteria = totalCriteria;
     }
 
     public double getPreference() {

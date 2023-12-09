@@ -162,7 +162,7 @@
                   <Insets left="35.0" />
                </padding>
             </MFXButton>
-            <MFXButton fx:id="viewTopsisButton" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Lihat Hasil" textFill="WHITE">
+            <MFXButton fx:id="viewTopsisButton" alignment="TOP_LEFT" onMouseClicked="#showTopsisList" prefHeight="40.0" prefWidth="172.0" stylesheets="@../resources/css/styles.css" text="Lihat Hasil" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>

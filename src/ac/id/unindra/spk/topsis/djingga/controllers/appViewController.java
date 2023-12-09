@@ -191,6 +191,17 @@ public class AppViewController implements Initializable {
             e.printStackTrace();
         }
     }
+    @FXML
+    private void showTopsisList(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/TopsisListView.fxml"));
+            Parent newContent = loader.load();
+            pane.getChildren().setAll(newContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void showCriteria(MouseEvent event) {

@@ -6,11 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import ac.id.unindra.spk.topsis.djingga.models.AlternativeTableModel;
 import ac.id.unindra.spk.topsis.djingga.models.TopsisModel;
+import ac.id.unindra.spk.topsis.djingga.models.TopsisTableListModel;
+import ac.id.unindra.spk.topsis.djingga.models.TopsisTableRankModel;
 import ac.id.unindra.spk.topsis.djingga.services.TopsisService;
 import ac.id.unindra.spk.topsis.djingga.utilities.DatabaseConnection;
 import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class TopsisController implements TopsisService {
     private Connection conn = new DatabaseConnection().getConnection();
@@ -343,4 +349,382 @@ public class TopsisController implements TopsisService {
             }
         }
     }
+
+    @Override
+    public ObservableList<TopsisTableRankModel> getDataRank(TopsisModel topsisModel) {
+        String sql = "SELECT tni.*, af.namaAlat FROM topsis_nilai_ideal tni JOIN alatFotografer af ON tni.idAlatFotografer = af.idAlatFotografer WHERE tni.idMatrixKeputusanTernormalisasi = ?";
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+
+        try {
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+
+            rs = stat.executeQuery();
+            ObservableList<TopsisTableRankModel> alternativeData = FXCollections.observableArrayList();
+            while (rs.next()) {
+                TopsisTableRankModel tableAlternative = new TopsisTableRankModel(
+                        rs.getString("namaAlat"),
+                        rs.getString("preferensi"),
+                        rs.getString("rank"));
+
+                alternativeData.add(tableAlternative);
+            }
+            return alternativeData;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public int totalCriteria(TopsisModel topsisModel) {
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        int total=0;
+        String sql = "SELECT COUNT(DISTINCT idBobotKriteria) AS count FROM nilaitopsis WHERE idMatrixKeputusanTernormalisasi = ?";
+
+        try {
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            rs = stat.executeQuery();
+
+            if (rs.next()) {
+              total = rs.getInt("count");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return total;
+    }
+
+    @Override
+    public List<Integer> getAlternativeValue(TopsisModel topsisModel) {
+       String sql = "SELECT nilaiAlternatif FROM nilaitopsis WHERE idMatrixKeputusanTernormalisasi =?";
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Integer> alternativeValueTemp= new ArrayList<>();
+        try {
+
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            rs = stat.executeQuery();
+
+            while (rs.next()) {
+                int value = rs.getInt("nilaiAlternatif");
+                alternativeValueTemp.add(value);
+            }
+
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return alternativeValueTemp;
+    }
+
+    @Override
+    public int totalAlternative(TopsisModel topsisModel) {
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        int total=0;
+        String sql = "SELECT COUNT(DISTINCT idAlatFotografer) AS count FROM nilaitopsis WHERE idMatrixKeputusanTernormalisasi = ?";
+
+        try {
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            rs = stat.executeQuery();
+
+            if (rs.next()) {
+               total = rs.getInt("count");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return total;
+    }
+
+    @Override
+    public List<Double> getNormalizedDecisionMatrixValue(TopsisModel topsisModel) {
+        String sql = "SELECT nilaiMatrixKeputusanTernomalisasi FROM nilaitopsis WHERE idMatrixKeputusanTernormalisasi =?";
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Double> alternativeValueTemp= new ArrayList<>();
+        try {
+
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            rs = stat.executeQuery();
+
+            while (rs.next()) {
+                Double value = rs.getDouble("nilaiMatrixKeputusanTernomalisasi");
+                alternativeValueTemp.add(value);
+            }
+
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return alternativeValueTemp;
+    }
+
+    @Override
+    public List<Double> getNormalizedAndWeightedDecisionMatrixValue(TopsisModel topsisModel) {
+        String sql = "SELECT nilaiMatrixKeputusanTernomalisasiDanTerbobot FROM nilaitopsis WHERE idMatrixKeputusanTernormalisasi =?";
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Double> alternativeValueTemp= new ArrayList<>();
+        try {
+
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            rs = stat.executeQuery();
+
+            while (rs.next()) {
+                Double value = rs.getDouble("nilaiMatrixKeputusanTernomalisasiDanTerbobot");
+                alternativeValueTemp.add(value);
+            }
+
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return alternativeValueTemp;
+    }
+
+    @Override
+    public List<Double> getIdealPositive(TopsisModel topsisModel) {
+        String sql = "SELECT nilai_ideal_positif FROM topsis_nilai_ideal WHERE idMatrixKeputusanTernormalisasi =?";
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Double> alternativeValueTemp= new ArrayList<>();
+        try {
+
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            rs = stat.executeQuery();
+
+            while (rs.next()) {
+                Double value = rs.getDouble("nilai_ideal_positif");
+                alternativeValueTemp.add(value);
+            }
+
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return alternativeValueTemp;
+    }
+
+    @Override
+    public List<Double> getIdealNegative(TopsisModel topsisModel) {
+        String sql = "SELECT nilai_ideal_negatif FROM topsis_nilai_ideal WHERE idMatrixKeputusanTernormalisasi =?";
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Double> alternativeValueTemp= new ArrayList<>();
+        try {
+
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            rs = stat.executeQuery();
+
+            while (rs.next()) {
+                Double value = rs.getDouble("nilai_ideal_negatif");
+                alternativeValueTemp.add(value);
+            }
+
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+        return alternativeValueTemp;
+    }
+
+    @Override
+    public void setListTopsis(TopsisModel topsisModel) {
+       PreparedStatement stat = null;
+        String sql = "INSERT INTO daftar_perhitungan(idMatrixKeputusanTernormalisasi, kategori, jumlah_bobot,tanggal_perhitungan) VALUES (?,?,?,?)";
+        try {
+            stat = conn.prepareStatement(sql);
+
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            stat.setString(2, topsisModel.getCategory());
+            stat.setInt(3, topsisModel.getTotalCriteria());
+            stat.setString(4, topsisModel.getDate());
+            
+
+            stat.executeUpdate();
+
+        } catch (
+
+        Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void countTopsis(TopsisModel topsisModel) {
+        String sql = "SELECT  COUNT(*) AS total_topsis FROM daftar_perhitungan";
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+
+        try {
+            stat = conn.prepareStatement(sql);
+            rs = stat.executeQuery();
+
+            if (rs.next()) {
+                topsisModel.setTotalTopsis(rs.getInt("total_topsis"));
+
+                if (topsisModel.getTotalTopsis() < 12) {
+                    topsisModel.setTotalPaginate(1);
+                } else {
+                    topsisModel.setTotalPaginate((int) Math.ceil((double) topsisModel.getTotalTopsis() / 12.0));
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public ObservableList<TopsisTableListModel> getDataTopsis(TopsisModel topsisModel) {
+       String sql = "SELECT * FROM daftar_perhitungan LIMIT 12 OFFSET ?";
+        PreparedStatement stat = null;
+        int fetchingData = topsisModel.getActivePaginate();
+        ResultSet rs = null;
+        try {
+            stat = conn.prepareStatement(sql);
+            stat.setInt(1, fetchingData);
+
+            rs = stat.executeQuery();
+            ObservableList<TopsisTableListModel> topsisData = FXCollections.observableArrayList();
+            while (rs.next()) {
+                TopsisTableListModel topsisTable = new TopsisTableListModel(
+                        rs.getString("idMatrixKeputusanTernormalisasi"),
+                        rs.getString("kategori"),
+                        rs.getString("jumlah_bobot"),
+                        rs.getString("tanggal_perhitungan"));
+
+                topsisData.add(topsisTable);
+            }
+            return topsisData;
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void deleteTopsis(TopsisModel topsisModel) {
+        PreparedStatement stat = null;
+        String sql = "DELETE FROM daftar_perhitungan WHERE idMatrixKeputusanTernormalisasi = ? ";
+        try {
+            stat = conn.prepareStatement(sql);
+            stat.setString(1, topsisModel.getIdNormalizedDecisionMatrix());
+            stat.executeUpdate();
+            NotificationManager.notification("Berhasil dihapus",
+                    "Id Topsis " + topsisModel.getIdNormalizedDecisionMatrix() + " telah dihapus");
+
+        } catch (Exception e) {
+            System.err.println(e);
+        } finally {
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    System.err.println(e);
+                }
+            }
+        }
+    }
+
+   
 }

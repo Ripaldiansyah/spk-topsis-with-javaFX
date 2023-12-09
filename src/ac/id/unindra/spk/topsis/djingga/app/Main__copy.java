@@ -14,7 +14,7 @@ public class Main__copy extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader
-                .load(getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/CalcTopsisView.fxml"));
+                .load(getClass().getResource("/ac/id/unindra/spk/topsis/djingga/views/TopsisListView.fxml"));
         Scene scene = new Scene(root);
 
         root.setOnMousePressed(event -> {
