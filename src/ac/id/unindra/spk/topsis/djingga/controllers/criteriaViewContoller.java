@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import ac.id.unindra.spk.topsis.djingga.models.CriteriaModel;
 import ac.id.unindra.spk.topsis.djingga.models.CriteriaTableModel;
-import ac.id.unindra.spk.topsis.djingga.models.UserTableModel;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPagination;
 import javafx.collections.FXCollections;

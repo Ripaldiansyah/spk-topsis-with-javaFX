@@ -82,7 +82,7 @@ public class AddCriteriaViewContoller implements Initializable {
     public static boolean runPane = false;
     public static String criteriaNameEdit;
     public static boolean editing = false;
-    private boolean setEditing, addEditing,backEditing = false;
+    private boolean setEditing, addEditing, backEditing = false;
     CriteriaModel criteriaModel = new CriteriaModel();
 
     @Override
@@ -97,19 +97,6 @@ public class AddCriteriaViewContoller implements Initializable {
             criteriaText.setText("Ubah Kriteria");
         }
 
-    }
-
-    private void getData() {
-        criteriaModel.setCriteriaName(criteriaNameEdit);
-        criteriaService.getCriteria(criteriaModel);
-        criteriaName.setText(criteriaModel.getCriteriaName());
-        criteriaType.getSelectionModel().selectItem(criteriaModel.getCriteriaType());
-        valueWeight.getSelectionModel().selectItem(criteriaModel.getValueWeight());
-        criteria1.setText(criteriaModel.getCriteria1());
-        criteria2.setText(criteriaModel.getCriteria2());
-        criteria3.setText(criteriaModel.getCriteria3());
-        criteria4.setText(criteriaModel.getCriteria4());
-        criteria5.setText(criteriaModel.getCriteria5());
     }
 
     private void setDataValueWeight() {
@@ -131,6 +118,19 @@ public class AddCriteriaViewContoller implements Initializable {
         criteriaType.getItems().addAll(options);
     }
 
+    private void getData() {
+        criteriaModel.setCriteriaName(criteriaNameEdit);
+        criteriaService.getCriteria(criteriaModel);
+        criteriaName.setText(criteriaModel.getCriteriaName());
+        criteriaType.getSelectionModel().selectItem(criteriaModel.getCriteriaType());
+        valueWeight.getSelectionModel().selectItem(criteriaModel.getValueWeight());
+        criteria1.setText(criteriaModel.getCriteria1());
+        criteria2.setText(criteriaModel.getCriteria2());
+        criteria3.setText(criteriaModel.getCriteria3());
+        criteria4.setText(criteriaModel.getCriteria4());
+        criteria5.setText(criteriaModel.getCriteria5());
+    }
+
     private void nextPane() {
         activeAchorPane(setCriteria);
     }
@@ -141,8 +141,8 @@ public class AddCriteriaViewContoller implements Initializable {
             addEditing = true;
             setEditing = false;
         } else {
-           addEditing=false;
-                setEditing=false;
+            addEditing = false;
+            setEditing = false;
         }
         activeAchorPane(nameCriteria);
     }
@@ -172,7 +172,7 @@ public class AddCriteriaViewContoller implements Initializable {
                 nextPane();
                 addEditing = false;
                 setEditing = true;
-                backEditing=true;
+                backEditing = true;
             } else {
                 addCriteriaModel.setCriteriaName(nameCriteriaString);
                 addCriteriaModel.setCriteriaType(criteriaTypeString);
@@ -183,7 +183,7 @@ public class AddCriteriaViewContoller implements Initializable {
                 } else {
                     nextPane();
                 }
-                backEditing=false;
+                backEditing = false;
             }
 
         }
@@ -198,10 +198,10 @@ public class AddCriteriaViewContoller implements Initializable {
             String criteria4String = criteria4.getText();
             String criteria5String = criteria5.getText();
             addCriteriaModel.setCriteria1(criteria1String);
-                addCriteriaModel.setCriteria2(criteria2String);
-                addCriteriaModel.setCriteria3(criteria3String);
-                addCriteriaModel.setCriteria4(criteria4String);
-                addCriteriaModel.setCriteria5(criteria5String);
+            addCriteriaModel.setCriteria2(criteria2String);
+            addCriteriaModel.setCriteria3(criteria3String);
+            addCriteriaModel.setCriteria4(criteria4String);
+            addCriteriaModel.setCriteria5(criteria5String);
             if (setEditing) {
                 String idCriteria = criteriaModel.getCriteriaId();
                 addCriteriaModel.setCriteriaId(idCriteria);
@@ -213,7 +213,6 @@ public class AddCriteriaViewContoller implements Initializable {
                     editing = false;
                 }
             } else {
-
 
                 criteriaService.insertCriteria(addCriteriaModel);
 

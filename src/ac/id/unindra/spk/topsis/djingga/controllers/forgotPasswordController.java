@@ -13,7 +13,6 @@ import ac.id.unindra.spk.topsis.djingga.utilities.NotificationManager;
 import ac.id.unindra.spk.topsis.djingga.services.ForgotPasswordService;
 
 public class ForgotPasswordController implements ForgotPasswordService {
-    ForgotPasswordService forgotPasswordService = this;
     private Connection conn = new DatabaseConnection().getConnection();
     OTPService OTPService = new OTPController();
 

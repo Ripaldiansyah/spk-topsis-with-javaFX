@@ -19,7 +19,6 @@ import ac.id.unindra.spk.topsis.djingga.utilities.OTPGenerator;
 
 public class OTPController implements OTPService {
     private Connection conn = new DatabaseConnection().getConnection();
-    OTPService OTPService = this;
     OTPModel OTPModel = new OTPModel();
 
     @Override
@@ -101,7 +100,7 @@ public class OTPController implements OTPService {
                 stat.setString(1, OTPModel.getIdOTP());
                 stat.setString(2, OTPModel.getStoredOTP());
             }
-            OTPService.destroyOTP(OTPModel);
+           destroyOTP(OTPModel);
             stat.executeUpdate();
         } catch (Exception e) {
             System.err.println(e);
@@ -126,7 +125,7 @@ public class OTPController implements OTPService {
         OTPModel.setStoredOTP(storedOTP);
         
 
-        OTPService.setOTP(OTPModel, true);
+        setOTP(OTPModel, true);
     }
 
     @Override

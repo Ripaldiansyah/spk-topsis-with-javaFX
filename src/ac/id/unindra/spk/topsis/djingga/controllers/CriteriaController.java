@@ -57,32 +57,35 @@ public class CriteriaController implements CriteriaService {
         PreparedStatement statBobotKriteria = null;
         PreparedStatement statKriteriaPenilaian = null;
 
-        String insertBobotKriteria = "INSERT INTO bobotKriteria (namaKriteria, jenisKriteria, bobotNilaiKriteria, bobot, idKriteriaPenilaian) VALUES (?, ?, ?, ?, ?)";
-        String insertKriteriaPenilaian = "INSERT INTO kriteriaPenilaian ( nilai1, nilai2, nilai3, nilai4, nilai5) VALUES ( ?, ?, ?, ?, ?)";
+        String insertBobotKriteria = "INSERT INTO bobotKriteria (namaKriteria, jenisKriteria, bobotNilaiKriteria, bobot) VALUES (?, ?, ?, ?)";
+        String insertKriteriaPenilaian = "INSERT INTO kriteriaPenilaian ( nilai1, nilai2, nilai3, nilai4, nilai5, idBobotKriteria) VALUES ( ?, ?, ?, ?, ?,?)";
 
         try {
 
-            statKriteriaPenilaian = conn.prepareStatement(insertKriteriaPenilaian, new String[] { "idBobotKriteria" });
+            statBobotKriteria = conn.prepareStatement(insertBobotKriteria, new String[] { "idBobotKriteria" });
+            statBobotKriteria.setString(1, criteriaModel.getCriteriaName());
+            statBobotKriteria.setString(2, criteriaModel.getCriteriaType());
+            statBobotKriteria.setString(3, criteriaModel.getValueWeight());
+            statBobotKriteria.setInt(4, weight(criteriaModel));
+            statBobotKriteria.executeUpdate();
+
+              ResultSet generatedKeys = statBobotKriteria.getGeneratedKeys();
+            int idBobotKriteria = -1;
+            if (generatedKeys.next()) {
+                idBobotKriteria = generatedKeys.getInt(1);
+            }
+
+            statKriteriaPenilaian = conn.prepareStatement(insertKriteriaPenilaian);
             statKriteriaPenilaian.setString(1, criteriaModel.getCriteria1());
             statKriteriaPenilaian.setString(2, criteriaModel.getCriteria2());
             statKriteriaPenilaian.setString(3, criteriaModel.getCriteria3());
             statKriteriaPenilaian.setString(4, criteriaModel.getCriteria4());
             statKriteriaPenilaian.setString(5, criteriaModel.getCriteria5());
+            statKriteriaPenilaian.setInt(6, idBobotKriteria);
             statKriteriaPenilaian.executeUpdate();
 
-            ResultSet generatedKeys = statKriteriaPenilaian.getGeneratedKeys();
-            int idKriteriaPenilaian = -1;
-            if (generatedKeys.next()) {
-                idKriteriaPenilaian = generatedKeys.getInt(1);
-            }
 
-            statBobotKriteria = conn.prepareStatement(insertBobotKriteria);
-            statBobotKriteria.setString(1, criteriaModel.getCriteriaName());
-            statBobotKriteria.setString(2, criteriaModel.getCriteriaType());
-            statBobotKriteria.setString(3, criteriaModel.getValueWeight());
-            statBobotKriteria.setInt(4, weight(criteriaModel));
-            statBobotKriteria.setInt(5, idKriteriaPenilaian);
-            statBobotKriteria.executeUpdate();
+          
 
             notificationManager.notification("Berhasil",
                     "Kriteria " + criteriaModel.getCriteriaName() + " telah ditambahkan");
@@ -235,10 +238,7 @@ public class CriteriaController implements CriteriaService {
 
     @Override
     public void getCriteria(CriteriaModel criteriaModel) {
-        String sql = "SELECT * FROM bobotKriteria\r\n" + //
-                      "INNER JOIN kriteriaPenilaian ON \r\n" + //
-                     "bobotKriteria.idKriteriaPenilaian = kriteriaPenilaian.idKriteriaPenilaian \r\n" + //
-                       "WHERE bobotKriteria.namaKriteria = ?";
+        String sql = "SELECT bk.*, kp.* FROM bobotKriteria bk INNER JOIN kriteriaPenilaian kp ON bk.idBobotKriteria = kp.idBobotKriteria WHERE bk.namaKriteria = ?";
         PreparedStatement stat = null;
         ResultSet rs = null;
 

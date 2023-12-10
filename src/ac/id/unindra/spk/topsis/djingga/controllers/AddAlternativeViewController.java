@@ -43,7 +43,7 @@ public class AddAlternativeViewController implements Initializable {
     private MFXButton saveAlternativeButton;
 
     public static boolean editing = false;
-    public static String alternativeNameEdit,alternativeCategoryEdit;
+    public static String alternativeNameEdit, alternativeCategoryEdit;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -100,19 +100,20 @@ public class AddAlternativeViewController implements Initializable {
             } else {
                 if (alternativeService.checkAlternative(alternativeModel)) {
                     NotificationManager.notification("Alternatif Sudah terdaftar",
-                            "Nama Alternatif " + nameAlternativeString + " dalam kategori "+ categoryAlternativeString+" Sudah terdaftar");
+                            "Nama Alternatif " + nameAlternativeString + " dalam kategori " + categoryAlternativeString
+                                    + " Sudah terdaftar");
                 } else {
                     insertAlternative();
                     NotificationManager.notification("Berhasil ",
                             "Alternatif " + nameAlternativeString + " telah ditambahkan");
-                             clearField();
+                    clearField();
                 }
             }
-           
+
         }
     }
 
-    private void setEdit(){
+    private void setEdit() {
         alternativeText.setText("Edit Alternatif");
         alternativeName.setText(alternativeNameEdit);
         alternativeCategory.getSelectionModel().selectItem(alternativeCategoryEdit);
@@ -121,7 +122,8 @@ public class AddAlternativeViewController implements Initializable {
         alternativeModel.setAlternativeCategory(alternativeCategoryEdit);
         alternativeService.getId(alternativeModel);
     }
-     private void backToListAlternative(){
+
+    private void backToListAlternative() {
         alternativeText.setText("Tambah Alternatif");
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -143,7 +145,7 @@ public class AddAlternativeViewController implements Initializable {
         alternativeService.insertAlternative(alternativeModel);
     }
 
-    private void updateAlternative() { 
+    private void updateAlternative() {
         alternativeService.updateAlternative(alternativeModel);
     }
 }
